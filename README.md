@@ -1,2 +1,1 @@
-# posinnove
-An education next project 
+#Posinnove dashboard
