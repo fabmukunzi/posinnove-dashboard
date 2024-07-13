@@ -42,7 +42,7 @@ const Home = () => {
             </Title>
           </div>
           <Link
-            href="https://whatsapp.com/channel/0029VaiOLppAu3aHMgLRNT3l"
+            href="https://chat.whatsapp.com/JQPvBWrTu4OJYR5lGMkFzk"
             className="font-normal bg-primary text-white rounded-xl py-3 px-4 my-2 text-lg md:text-xl"
           >
             Join our community
