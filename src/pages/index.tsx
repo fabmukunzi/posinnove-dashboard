@@ -90,7 +90,6 @@ const Home = () => {
             </Link>
             <Link
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/login`}
-              target="_blank"
             >
               <Button type="primary" className="w-44 text-white border-none">
                 Login Page
@@ -98,7 +97,6 @@ const Home = () => {
             </Link>
             <Link
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/signup`}
-              target="_blank"
             >
               <Button type="primary" className="w-44 text-white border-none">
                 Signup Page
