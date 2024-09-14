@@ -24,6 +24,9 @@ const antdTheme: ThemeConfig = {
     },
     Menu: {
       lineHeight: 1,
+      itemHoverBg:"black",
+      itemHoverColor:"#091e6a",
+      itemSelectedBg:"black"
     },
     Card: {
       colorBorder: '#091e6a',

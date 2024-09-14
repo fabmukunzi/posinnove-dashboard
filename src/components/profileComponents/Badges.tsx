@@ -9,19 +9,22 @@ const Badges = () => {
 		setOpenModal(!openModal);
 	};
 	return (
-		<div className="w-2/5">
+		<div className="lg:w-2/5">
 			<div className="border-t-2 flex flex-col gap-5">
-				<div className="flex gap-6">
+				<div className="flex gap-6 mt-4">
 					<h1>
 						{" "}
-						<b className="border-b-black border-b-2">Badges/</b>Awards
+						<b className="border-b-black border-b-2 text-xl lg:text-base">
+							Badges/
+						</b>
+						Awards
 					</h1>
 					<div
 						className="flex items-center cursor-pointer"
 						onClick={() => toggleModal()}
 					>
-						<MdOutlineModeEditOutline />
-						<span className="text-sm underline text-primary">edit</span>
+						{/* <MdOutlineModeEditOutline />
+						<span className="text-sm underline text-primary">edit</span> */}
 					</div>
 				</div>
 				<div className="grid grid-cols-2 gap-2">

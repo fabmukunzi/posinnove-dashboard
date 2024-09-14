@@ -41,11 +41,11 @@ const SocialMediaComponent = () => {
 	];
 	return (
 		<div>
-			<div className="grid grid-cols-2 gap-y-3 mt-3">
+			<div className="md:grid grid-cols-2 gap-y-3 mt-3 flex flex-col">
 				{socialData.map((data, idx) => (
 					<div key={idx} className="flex items-center gap-2">
 						<div>{data.icon}</div>
-						<div className="flex items-center gap-2">
+						<div className="flex items-center gap-2 text-xl lg:text-sm">
 							<span>{data.title}</span>
 							<CopyToClipboard
 								text={data.linkToShare}

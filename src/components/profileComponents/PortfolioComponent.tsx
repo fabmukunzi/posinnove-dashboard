@@ -16,11 +16,11 @@ const PortfolioComponent = () => {
 					className="flex items-center cursor-pointer"
 					onClick={() => toggleModal()}
 				>
-					<MdOutlineModeEditOutline />
-					<span className="text-sm underline text-primary">edit</span>
+					{/* <MdOutlineModeEditOutline />
+					<span className="text-sm underline text-primary">edit</span> */}
 				</div>
 			</div>
-			<div className=" grid grid-cols-3 gap-10">
+			<div className=" lg:grid grid-cols-3 gap-10 flex flex-col">
 				{portfolioData.map((item, idx) => (
 					<PortfolioCard
 						image={item.image.src}

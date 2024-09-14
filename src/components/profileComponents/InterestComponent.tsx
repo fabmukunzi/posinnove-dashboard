@@ -15,9 +15,11 @@ const InterestComponent = () => {
 	};
 	return (
 		<div>
-			<div className="flex flex-col gap-2">
-				<div className="flex gap-4">
-					<h1>Interests</h1>
+			<div className="flex flex-col lg:gap-2 gap-5">
+				<div className="flex gap-4 items-center justify-start">
+					<h1 className="text-2xl font-bold lg:text-base lg:font-normal">
+						Interests
+					</h1>
 					<div
 						className="flex items-center cursor-pointer"
 						onClick={() => toggleAddModal()}
@@ -29,11 +31,11 @@ const InterestComponent = () => {
 						className="flex items-center cursor-pointer"
 						onClick={() => toggleModal()}
 					>
-						<MdOutlineModeEditOutline />
-						<span className="text-sm underline text-primary">edit</span>
+						{/* <MdOutlineModeEditOutline />
+						<span className="text-sm underline text-primary">edit</span> */}
 					</div>
 				</div>
-				<div className="flex items-center gap-2">
+				<div className="lg:flex items-center lg:gap-2 gap-5 lg:flex-row flex-col grid grid-cols-2">
 					{interestData.map((item, idx) => (
 						<div
 							className="text-[14px] px-2 flex items-center gap-2 border rounded-l-full rounded-r-full"

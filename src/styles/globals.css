@@ -2,6 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.fixed-menu {
+	@apply min-w-[41%] whitespace-nowrap overflow-hidden gap-2 py-2 bg-[#F2F2F2] rounded-3xl;
+}
+
+.fixed-menu .ant-menu-item {
+	@apply flex justify-center items-center gap-0 h-10 rounded-3xl !important;
+  padding: 0 30px;
+
+}
+
+
+
+@media (max-width: 768px) {
+	.fixed-menu {
+		@apply justify-start;
+	}
+
+	.fixed-menu .ant-menu-item {
+		@apply px-10;
+	}
+}
+.fixed-menu .ant-menu-item-selected,
+.fixed-menu .ant-menu-item-active {
+  @apply text-white !important;
+  background-color: #1A1B21 !important;
+}
+
+.fixed-menu .ant-menu-item::after {
+  border-bottom: none !important;
+}
+
+@media(max-width:1282px){
+  .fixed-menu{
+    @apply pr-2;
+}
+}
+@media(max-width:1318){
+  .fixed-menu{
+    @apply pr-4 w-60 gap-3 bg-red-500 !important;
+}
+}
+
+.fixed-menu .ant-menu-item:hover {
+  background-color: #1A1B21 !important;
+  color: #ffffff !important;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

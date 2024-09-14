@@ -28,14 +28,14 @@ const WorkExperienceComponent = () => {
 					className="flex items-center cursor-pointer"
 					onClick={() => toggleModal()}
 				>
-					<MdOutlineModeEditOutline />
-					<span className="text-sm underline text-primary">edit</span>
+					{/* <MdOutlineModeEditOutline />
+					<span className="text-sm underline text-primary">edit</span> */}
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 mt-5">
 				{workExperienceData.map((data, index) => (
 					<WorkingExperienceCard
-					key={index}
+						key={index}
 						title={data.title}
 						profile={data.profile.src}
 						date={data.date}
