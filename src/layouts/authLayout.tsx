@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { homeImage, logo } from '@utils/images';
 import { Typography } from 'antd';
 import { motion } from 'framer-motion';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 type Props = {
   children: React.ReactNode;
 };
-const AuthLayout = ({ children }: Props) => {
+const AuthLayout:FC<any> = ({ children }) => {
   const { Title } = Typography;
   const text =
     'Transform Education with Practical Learning and Collaboration through Posinnove'.split(
