@@ -33,8 +33,9 @@ const WorkExperienceComponent = () => {
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 mt-5">
-				{workExperienceData.map((data, idx) => (
+				{workExperienceData.map((data, index) => (
 					<WorkingExperienceCard
+					key={index}
 						title={data.title}
 						profile={data.profile.src}
 						date={data.date}

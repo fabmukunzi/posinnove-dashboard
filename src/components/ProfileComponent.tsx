@@ -15,6 +15,7 @@ import GetInTouch from "./profileComponents/GetInTouch";
 import WorkExperienceComponent from "./profileComponents/WorkExperienceComponent";
 import Badges from "./profileComponents/Badges";
 import PortfolioComponent from "./profileComponents/PortfolioComponent";
+import { Image } from "antd";
 
 const ProfileComponent = () => {
 	const [copied, setCopied] = useState(false);
@@ -36,7 +37,8 @@ const ProfileComponent = () => {
 						<div className="flex">
 							<div className="flex gap-4 items-center">
 								<div className="w-20 h-20 rounded-full overflow-hidden">
-									<img
+									<Image
+									preview={false}
 										src={profileImage.src}
 										alt="profile_image"
 										className="w-full h-full object-cover"
@@ -67,7 +69,7 @@ const ProfileComponent = () => {
 							</div>
 						</div>
 						<div className="w-1/3">
-							<h1 className="text-2xl font-bold">Hello! I'm Bright Manzi</h1>
+							<h1 className="text-2xl font-bold">Hello! I&apos;m Bright Manzi</h1>
 							<p className="text-lg">
 								Digital Product Designer Based In Kigali Rwanda
 							</p>

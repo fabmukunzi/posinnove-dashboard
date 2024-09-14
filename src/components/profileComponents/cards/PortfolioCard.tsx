@@ -1,3 +1,4 @@
+import { Image } from "antd";
 import { TbPointFilled } from "react-icons/tb";
 
 interface PortfolioCardProps {
@@ -17,7 +18,8 @@ const PortfolioCard = ({
 		<div className="w-full h-full rounded-lg border p-3">
 			<div className="flex flex-col items-center justify-between h-full">
 				<div className="w-full h-64">
-					<img
+					<Image
+					preview={false}
 						src={image}
 						alt="image"
 						className="w-full h-full object-cover rounded-lg"

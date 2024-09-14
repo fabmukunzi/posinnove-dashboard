@@ -8,6 +8,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { RiNotification2Line } from "react-icons/ri";
 import { TbHome } from "react-icons/tb";
 import ProfileModal from "./common/ProfileModal";
+import {Image} from "antd"
 
 const { Header } = Layout;
 
@@ -23,7 +24,7 @@ const DashboardHeader = () => {
 			<Header className="!bg-white border-b border-b-[#f1f1f1] flex items-center justify-between px-10 py-10">
 				<div className="flex items-center gap-2">
 					<div>
-						<img src={dashboardLogo.src} alt="dashboard logo" />
+						<Image preview={false} src={dashboardLogo.src} alt="dashboard logo" />
 					</div>
 				</div>
 				<div className="flex items-center w-full justify-between">
@@ -49,8 +50,8 @@ const DashboardHeader = () => {
 							className="flex items-center gap-2 w-10 h-10 rounded-full overflow-hidden cursor-pointer"
 							onClick={() => toggleModal()}
 						>
-							<img
-								src={dashboardUserProfile.src}
+							<Image preview={false}
+								src={dashboardUserProfile}
 								alt="dashboard logo"
 								className="w-full h-full object-cover"
 							/>

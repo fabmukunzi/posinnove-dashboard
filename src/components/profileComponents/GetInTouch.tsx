@@ -15,7 +15,7 @@ const GetInTouch = () => {
 	return (
 		<div className="border-t-2 pt-2">
 			<div className="flex items-center gap-2">
-				<h1 className="text-xl font-bold">Let's keep in touch</h1>
+				<h1 className="text-xl font-bold">Let&apos;s keep in touch</h1>
 				<div
 					className="flex items-center cursor-pointer"
 					onClick={() => toggleAddModal()}
