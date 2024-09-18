@@ -23,7 +23,7 @@ const DashboardSideMenu = () => {
 				console.log(loggedInUser, "loooooooooog");
 			}
 		}
-	}, []);
+	}, [loggedInUser]);
 	const { pathname } = useRouter();
 
 	const menuItems = [
