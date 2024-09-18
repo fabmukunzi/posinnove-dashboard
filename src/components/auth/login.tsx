@@ -18,11 +18,11 @@ const LoginComponent = () => {
 			const { data } = await login(values).unwrap();
 			const decoded = decodeToken(data.token);
 			dispatch(setToken(data.token));
-			if (decoded.role === "teacher" || decoded.role === "admin") {
+			// if (decoded.role === "teacher" || decoded.role === "admin") {
 				push("/dashboard");
-			} else {
-				push("/");
-			}
+			// } else {
+			// 	push("/");
+			// }
 		} catch (error: any) {
 			console.log(error, "errrrrr");
 			notification.error({
