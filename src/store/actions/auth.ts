@@ -22,6 +22,13 @@ const userEndpoints = baseAPI.injectEndpoints({
 				method: "GET",
 			}),
 		}),
+		updateProfile: builder.mutation<any, any>({
+			query: (data) => ({
+				url: "/api/users/profile",
+				method: "PATCH",
+				body: data,
+			}),
+		}),
 		verifyEmail: builder.query<void, string>({
 			query: (token) => ({
 				url: `/api/users/verify-email/${token}`,
@@ -36,4 +43,5 @@ export const {
 	useSignupMutation,
 	useGetProfileQuery,
 	useVerifyEmailQuery,
+	useUpdateProfileMutation,
 } = userEndpoints;

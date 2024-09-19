@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Provider } from "react-redux";
 import { store } from "@store/index";
 import DashboardLayout from "@layout/DashboardLayout";
+import ProtectedRoute from "@components/ProtectedRoute";
 
 const roboto = Poppins({
 	weight: "400",
@@ -20,9 +21,11 @@ export default function App({ Component, pageProps }: AppProps) {
 			<main className={roboto.className}>
 				<Provider store={store}>
 					{isDashboardRoute ? (
-						<DashboardLayout>
-							<Component {...pageProps} />
-						</DashboardLayout>
+						<ProtectedRoute>
+							<DashboardLayout>
+								<Component {...pageProps} />
+							</DashboardLayout>
+						</ProtectedRoute>
 					) : (
 						<Component {...pageProps} />
 					)}

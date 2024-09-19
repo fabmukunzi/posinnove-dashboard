@@ -1,4 +1,5 @@
-import { interestData } from "@utils/profileDataUtils";
+import InterestModal from "@components/common/InterestModal";
+import { useGetInterestQuery } from "@store/actions/interest";
 import { useState } from "react";
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { MdOutlineModeEditOutline } from "react-icons/md";
@@ -7,12 +8,19 @@ const InterestComponent = () => {
 	const [openAddModal, setOpenAddModal] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 
+	// Fetch interest data using useGetInterestQuery
+	const { data: interestData, isLoading, error } = useGetInterestQuery();
+
 	const toggleAddModal = () => {
 		setOpenAddModal(!openAddModal);
 	};
 	const toggleModal = () => {
 		setOpenModal(!openModal);
 	};
+
+	console.log(interestData);
+	const fileteredInterest = interestData?.user.interests;
+
 	return (
 		<div>
 			<div className="flex flex-col lg:gap-2 gap-5">
@@ -35,18 +43,30 @@ const InterestComponent = () => {
 						<span className="text-sm underline text-primary">edit</span> */}
 					</div>
 				</div>
-				<div className="lg:flex items-center lg:gap-2 gap-5 lg:flex-row flex-col grid grid-cols-2">
-					{interestData.map((item, idx) => (
-						<div
-							className="text-[14px] px-2 flex items-center gap-2 border rounded-l-full rounded-r-full"
-							key={idx}
-						>
-							<FaLongArrowAltUp />
-							<h1>{item.title}</h1>
-						</div>
-					))}
-				</div>
+
+				{/* Show loading state while fetching data */}
+				{isLoading && <p>Loading interests...</p>}
+
+				{/* Show error message if there's an issue */}
+				{error && <p className="text-red-500">Failed to load interests.</p>}
+
+				{/* Render the fetched interest data */}
+				{fileteredInterest && (
+					<div className="lg:flex items-center lg:gap-2 gap-5 lg:flex-row flex-col grid grid-cols-2">
+						{fileteredInterest.map((item: any, idx: number) => (
+							<div
+								className="text-[14px] px-2 flex items-center gap-2 border rounded-l-full rounded-r-full"
+								key={idx}
+							>
+								<FaLongArrowAltUp />
+								<h1>{item}</h1>
+							</div>
+						))}
+					</div>
+				)}
 			</div>
+
+			{openAddModal && <InterestModal toggleModal={toggleAddModal} />}
 		</div>
 	);
 };

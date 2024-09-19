@@ -30,7 +30,7 @@ const PortfolioCard = ({
 						<h1 className="text-2xl font-bold my-3">{title}</h1>
 						<p className="text-sm md:text-xl lg:text-sm">{description}</p>
 					</div>
-					<div className="flex items-center gap-2">
+					<div className="flex items-center gap-2 py-3">
 						{stack.map((item, idx) => (
 							<div
 								key={idx}
