@@ -4,6 +4,7 @@ import dashboardLogo from "@assets/home_icon.png";
 import dashboardUserProfile from "@assets/Dashboard_user_rofile.svg";
 import profileImage from "@assets/profile.jpg";
 import portfolioImage from "@assets/portfolio_image.png";
+import simba from "@assets/images/simba.jpeg";
 
 export {
 	logo,
@@ -12,4 +13,5 @@ export {
 	dashboardUserProfile,
 	profileImage,
 	portfolioImage,
+	simba
 };

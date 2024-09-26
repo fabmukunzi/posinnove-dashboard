@@ -31,6 +31,17 @@ const antdTheme: ThemeConfig = {
     Card: {
       colorBorder: '#091e6a',
     },
+    Carousel:{
+      dotActiveWidth:12,
+      dotHeight:12,
+      dotWidth:12,
+      dotOffset:12,
+      dotGap:2
+    },
+    Tabs:{
+      titleFontSize:16,
+      horizontalMargin:"0 0 18px 0"
+    }
   },
 };
 

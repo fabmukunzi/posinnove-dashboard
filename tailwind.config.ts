@@ -11,6 +11,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#091e6a',
+        surface: '#f8f8f8',
+        borderColor:'#00000058',
+        gray:"#45464"
       },
     },
   },

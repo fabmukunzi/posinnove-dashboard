@@ -134,13 +134,13 @@ const DashboardHeader = () => {
 	];
 
 	return (
-		<Header className="!bg-white border-b border-b-[#f1f1f1] flex items-center justify-between gap-52 px-10 py-10">
+		<Header className="!bg-white flex items-center justify-between gap-52 px-10 py-10">
 			<div className="flex items-center gap-2">
 				<div>
 					<Image src={logo.src} alt="dashboard logo" width={182} height={59} />
 				</div>
 			</div>
-			<div className="hidden lg:flex items-center w-full justify-between">
+			<div className="hidden lg:flex items-center w-full justify-between bg-[#F2F2F2] rounded-3xl">
 				<Menu
 					onClick={onClick}
 					className="fixed-menu"
@@ -198,8 +198,6 @@ const DashboardHeader = () => {
 					</Dropdown>
 				</div>
 			</div>
-
-			{/* For mobile screens */}
 			<div className="lg:hidden flex items-center justify-end w-full">
 				<Button
 					type="text"

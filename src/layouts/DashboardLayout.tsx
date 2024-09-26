@@ -10,11 +10,10 @@ const { Sider, Content } = Layout;
 const DashboardLayout = ({ children }: React.PropsWithChildren) => {
 	const router = useRouter();
 	const { pathname } = router;
+	const hiddenMenuLinks = ['/dashboard/profile', '/dashboard/projects'];
 
-	// Check if the current route is the 'profile' page
-	const isProfilePage = pathname === '/dashboard/profile';
+	const isProfilePage = hiddenMenuLinks.includes(pathname);
 	console.log(isProfilePage);
-	
 
 	return (
 		<AntdRegistry>
