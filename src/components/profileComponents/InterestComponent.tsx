@@ -8,7 +8,6 @@ const InterestComponent = () => {
 	const [openAddModal, setOpenAddModal] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 
-	// Fetch interest data using useGetInterestQuery
 	const { data: interestData, isLoading, error } = useGetInterestQuery();
 
 	const toggleAddModal = () => {
@@ -44,13 +43,10 @@ const InterestComponent = () => {
 					</div>
 				</div>
 
-				{/* Show loading state while fetching data */}
 				{isLoading && <p>Loading interests...</p>}
 
-				{/* Show error message if there's an issue */}
 				{error && <p className="text-red-500">Failed to load interests.</p>}
 
-				{/* Render the fetched interest data */}
 				{fileteredInterest && (
 					<div className="lg:flex items-center lg:gap-2 gap-5 lg:flex-row flex-col grid grid-cols-2">
 						{fileteredInterest.map((item: any, idx: number) => (

@@ -94,7 +94,7 @@ const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
 	return (
 		<div className="flex items-center justify-center fixed inset-0 bg-black/20 w-full h-full text-white">
 			<div
-				className="absolute w-full h-full inset-0 -z-10"
+				className="absolute w-full h-full inset-0 -z-10 backdrop-blur-sm"
 				onClick={toggleModal}
 			></div>
 			<div className="w-4/5 max-w-3xl bg-white p-6 rounded-lg shadow-lg">
@@ -233,13 +233,13 @@ const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
 							<button
 								type="button"
 								onClick={toggleModal}
-								className="text-white bg-red-500 p-2 px-6 rounded w-full"
+								className="text-primary p-2 px-6 rounded w-full hover:underline"
 							>
 								Cancel
 							</button>
 							<button
 								type="submit"
-								className="px-6 py-2 bg-green-600 text-white rounded w-full"
+								className="px-6 py-2 bg-primary text-white rounded w-full"
 								disabled={isLoading || isProfileLoading}
 							>
 								{isLoading || isProfileLoading ? "Updating..." : "Update"}

@@ -1,10 +1,10 @@
-import ProfileComponent from "@components/profileComponents/ProfileComponent";
+import DashboardProfile from "@components/profile/DashboardProfile";
 import ProtectedRoute from "@components/ProtectedRoute";
 import { useGetProfileQuery } from "@store/actions/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-const Profile = () => {
+const NewProfile = () => {
 	const { data } = useGetProfileQuery({});
 	const router = useRouter();
 
@@ -16,10 +16,11 @@ const Profile = () => {
 	return (
 		<div>
 			<ProtectedRoute>
-				<ProfileComponent />
+				{/* <ProfileComponent /> */}
+				<DashboardProfile />
 			</ProtectedRoute>
 		</div>
 	);
 };
 
-export default Profile;
+export default NewProfile;

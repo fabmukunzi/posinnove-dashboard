@@ -7,6 +7,7 @@ import { User } from "@phosphor-icons/react";
 import ReactConfetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import ProfileComponent from "@components/profileComponents/ProfileComponent";
+import DashboardProfile from "@components/profile/DashboardProfile";
 
 const Home = () => {
 	const { Title, Paragraph } = Typography;
@@ -71,7 +72,8 @@ const Home = () => {
               </Button>
             </Link>
           </div> */}
-					<ProfileComponent />
+					{/* <ProfileComponent /> */}
+					<DashboardProfile />
 				</>
 			) : (
 				<>
