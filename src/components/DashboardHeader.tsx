@@ -30,7 +30,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuProps["items"] = [
 	{
-		label: <Link href="/dashboard/profile">View Profile</Link>,
+		label: <Link href="/dashboard/my-profile">View Profile</Link>,
 		key: "1",
 		icon: <User />,
 	},

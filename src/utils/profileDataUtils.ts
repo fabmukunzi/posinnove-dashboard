@@ -95,3 +95,24 @@ export const portfolioData = [
 		stack: ["JavaScript", "React", "PHP", "APIs"],
 	},
 ];
+
+export const predefinedInterests = [
+	"Technology",
+	"Health",
+	"Finance",
+	"Education",
+	"Sports",
+	"Travel",
+	"Art",
+	"Music",
+	"Food",
+	"Fashion",
+	"Science",
+	"Environment",
+	"Politics",
+	"Gaming",
+	"Others",
+];
+
+export const defaultProfileImage =
+	"https://res.cloudinary.com/dkdzqcq5y/image/upload/v1726744418/default_profile_qnw3ra.svg";

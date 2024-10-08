@@ -2,43 +2,47 @@ import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { LuCopy } from "react-icons/lu";
 import { TiTick } from "react-icons/ti";
-import { FaLinkedin } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaAt } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
-import { FaAt } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import Link from "next/link";
 
 const SocialMediaComponent = () => {
-	const [copied, setCopied] = useState<number | null>(null);
+	const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
 	const socialData = [
 		{
 			title: "Aphrodis Uwineza",
+			name: "LinkedIn",
 			icon: <FaLinkedin className="text-blue-800 text-xl" />,
 			linkToShare: "https://www.linkedin.com/in/aphrodis-uwineza-961079281/",
 		},
 		{
 			title: "Aphrodis Garrix",
+			name: "Facebook",
 			icon: <FaFacebook className="text-lg text-blue-800" />,
-			linkToShare: "facebook.com/",
+			linkToShare: "https://www.facebook.com/aphrodisgarrix",
 		},
 		{
 			title: "Aphrodis Garrix",
+			name: "Instagram",
 			icon: <BsInstagram className="text-red-400 text-lg" />,
-			linkToShare: "https://www.linkedin.com/in/aphrodis-uwineza-961079281/",
+			linkToShare: "https://www.instagram.com/aphrodisgarrix/",
 		},
 		{
 			title: "Aphrodis",
+			name: "Dribbble",
 			icon: <FaAt className="text-lg text-red-400" />,
-			linkToShare: "https://www.linkedin.com/in/aphrodis-uwineza-961079281/",
+			linkToShare: "https://dribbble.com/aphrodis",
 		},
 		{
 			title: "Aphrodis",
+			name: "YouTube",
 			icon: <IoLogoYoutube className="text-lg text-red-500" />,
-			linkToShare: "https://www.linkedin.com/in/aphrodis-uwineza-961079281/",
+			linkToShare: "https://www.youtube.com/c/Aphrodis",
 		},
 	];
+
 	return (
 		<div>
 			<div className="md:grid grid-cols-2 gap-y-3 mt-3 flex flex-col">
@@ -46,24 +50,28 @@ const SocialMediaComponent = () => {
 					<div key={idx} className="flex items-center gap-2">
 						<div>{data.icon}</div>
 						<div className="flex items-center gap-2 text-xl lg:text-sm">
-							<span>{data.title}</span>
+							<span>
+								{copiedIndex === idx
+									? `Share your ${data.name} link`
+									: data.title}
+							</span>
 							<CopyToClipboard
 								text={data.linkToShare}
-								onCopy={() => setCopied(idx)}
+								onCopy={() => setCopiedIndex(idx)}
 							>
-								<div className={` `}>
-									{copied === idx ? (
+								<div>
+									{copiedIndex === idx ? (
 										<TiTick className="text-2xl text-green-500" />
 									) : (
-										<LuCopy className={` text-black`} />
+										<LuCopy className="text-black" />
 									)}
 								</div>
 							</CopyToClipboard>
 						</div>
 					</div>
 				))}
-				<div className="">
-					<Link href={"#"} className="underline text-primary">
+				<div>
+					<Link href="#" className="underline text-primary">
 						View my resume
 					</Link>
 				</div>
