@@ -18,6 +18,8 @@ const LoginComponent = () => {
 	const handleLogin = async (values: any) => {
 		try {
 			const { data } = await login(values).unwrap();
+
+			console.log(data, "data");
 			const decoded = decodeToken(data.token);
 			dispatch(setToken(data.token));
 			if (decoded) {

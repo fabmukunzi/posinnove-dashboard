@@ -6,7 +6,7 @@ import { simba } from "@utils/images";
 
 function PersonalCard({ project }: { project: any }) {
     return (
-        <div className='border border-borderColor w-1/3 h-56 rounded-xl bg-surface flex'>
+        <div className='border border-borderColor w-1/3 h-56 max-md:w-1/2 rounded-xl bg-surface flex'>
             <div
                 className='w-[40%] bg-blue-100 rounded-l-xl p-2'
                 style={{ backgroundImage: `url(${simba.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}

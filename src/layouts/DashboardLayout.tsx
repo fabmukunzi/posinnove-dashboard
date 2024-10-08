@@ -10,17 +10,17 @@ const { Sider, Content } = Layout;
 const DashboardLayout = ({ children }: React.PropsWithChildren) => {
 	const router = useRouter();
 	const { pathname } = router;
-	const hiddenMenuLinks = ['/dashboard/profile', '/dashboard/projects'];
+	const hiddenMenuLinks = ['/dashboard/profile', '/dashboard/projects','/dashboard'];
 
-	const isProfilePage = hiddenMenuLinks.includes(pathname);
-	console.log(isProfilePage);
+	const withoutSidebar = hiddenMenuLinks.includes(pathname);
+
 
 	return (
 		<AntdRegistry>
 			<Layout>
 				<DashboardHeader />
-				<Layout hasSider={!isProfilePage} className="bg-white">
-					{!isProfilePage && (
+				<Layout hasSider={!withoutSidebar} className="bg-white">
+					{!withoutSidebar && (
 						<Sider
 							theme="light"
 							className="fixed top-[100px] left-0 border border-primary rounded-r-2xl overflow-hidden h-[70vh] w-full"
@@ -28,7 +28,7 @@ const DashboardLayout = ({ children }: React.PropsWithChildren) => {
 							<DashboardSideMenu />
 						</Sider>
 					)}
-					<Layout className={isProfilePage ? "bg-white" : "ml-[250px] bg-white"}>
+					<Layout className={withoutSidebar ? "bg-white" : "ml-[250px] bg-white"}>
 						<Content className="p-[16px] min-h-[90vh]">{children}</Content>
 					</Layout>
 				</Layout>

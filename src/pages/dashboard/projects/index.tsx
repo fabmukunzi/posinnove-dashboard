@@ -11,9 +11,7 @@ function Index() {
 
   return (
     <>
-      <CurrentsProjects />
       <PersonalProjects />
-      <Picked />
     </>
   );
 }
