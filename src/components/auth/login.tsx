@@ -1,6 +1,7 @@
 import { useLoginMutation } from '@store/actions/auth';
 import { setToken } from '@store/reducers/app';
 import decodeToken from '@utils/auth/decodeUser';
+import { setCookie } from '@utils/cookies';
 import { logo } from '@utils/images';
 import { Button, Checkbox, Form, Input, Typography, notification } from 'antd';
 import Image from 'next/image';
@@ -19,8 +20,8 @@ const LoginComponent = () => {
     try {
       const { data } = await login(values).unwrap();
 
-      console.log(data, 'data');
       const decoded = decodeToken(data.token);
+	//   setCookie('posinnove-token',data?.token)
       dispatch(setToken(data.token));
       if (decoded) {
         toast.success('Login success');

@@ -1,14 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export default function middleware(req: any) {
-	const token = req.cookies.get("Idea-17dc1871");
-	console.log(token);
-	
+export default function middleware(req: NextRequest) {
+  const token = req.cookies.get('posinnove-token');
 
+  // if (!token) {
+  //   const loginUrl = new URL('/login', req.url);
+  //   return NextResponse.redirect(loginUrl);
+  // }
 
-	return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-	matcher: ["/dashboard"],
+	matcher: "/:path*", // Match all routes
 };
