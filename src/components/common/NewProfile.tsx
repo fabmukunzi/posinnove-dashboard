@@ -8,11 +8,11 @@ const NewProfile = () => {
 	const { data } = useGetProfileQuery({});
 	const router = useRouter();
 
-	useEffect(() => {
-		if (!data) {
-			router.push("/login");
-		}
-	}, [data, router]);
+	// useEffect(() => {
+	// 	if (!data) {
+	// 		router.push("/login");
+	// 	}
+	// }, [data, router]);
 	return (
 		<div>
 			<ProtectedRoute>
