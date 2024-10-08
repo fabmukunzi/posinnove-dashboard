@@ -68,3 +68,41 @@ body {
 	color: black;
 	background: white;
 }
+
+.ant-carousel .slick-dots{
+  position: relative;
+  top: 20px;
+
+}
+
+.ant-carousel .slick-dots li button {
+  background: #7d7d7d; 
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background: #000000;
+}
+.custom-scrollbar {
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #000000 #e0e0e0; /* For Firefox */
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Background of the scrollbar track */
+    border-radius: 10px; /* Round corners of the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #000000; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Round corners of the scrollbar thumb */
+    border: 2px solid transparent; /* Add a transparent border for spacing */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #3a7bd5; /* Color of the scrollbar thumb on hover */
+}

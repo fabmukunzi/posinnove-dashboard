@@ -1,17 +1,21 @@
+import DashboardHeader from '@components/DashboardHeader';
 import CurrentsProjects from '@components/projects/currentsProjects';
+import PendingCard from '@components/projects/pending-card';
 import PersonalProjects from '@components/projects/personalProject';
 import Picked from '@components/projects/picked';
 import DashboardLayout from '@layout/DashboardLayout';
-// import DashboardLayout from '@layoutLayout';
+import { myProjects } from '@utils/dummy-data';
+import { Carousel } from 'antd';
+import React, { useEffect, useState } from 'react';
 
-const index = () => {
+function Index() {
+
+
   return (
     <DashboardLayout>
-      <CurrentsProjects />
       <PersonalProjects />
-      <Picked />
     </DashboardLayout>
   );
-};
+}
 
-export default index;
+export default Index;
