@@ -219,14 +219,15 @@ const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
 						</div>
 						<div>
 							<label htmlFor="about" className="block text-gray-700">
-								About
+								Bio
 							</label>
 							<textarea
 								{...register("About")}
 								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="About"
+								placeholder="Add bio"
 								name="About"
 								rows={2}
+								maxLength={255}
 							></textarea>
 						</div>
 						<div className="flex items-center gap-5">
