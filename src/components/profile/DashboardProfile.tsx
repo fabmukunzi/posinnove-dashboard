@@ -170,8 +170,8 @@ const DashboardProfile = () => {
 				</div>
 				<div className="p-4 mt-10 ml-16 _shadow rounded-xl">
 					<h1 className="text-primary font-black text-2xl">Bio</h1>
-					{profile.data.About.length > 0 ? (
-						<div>{profile.data.About}</div>
+					{profile?.data?.About?.length > 0 ? (
+						<div>{profile?.data?.About}</div>
 					) : (
 						<div className="text-lg flex items-center gap-2">
 							Please add bio
