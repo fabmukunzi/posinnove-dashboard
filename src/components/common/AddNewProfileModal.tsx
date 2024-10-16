@@ -1,5 +1,5 @@
 import { useForm, useFieldArray } from "react-hook-form";
-import { Input, Button } from "antd"; // Ant Design components
+import { Input, Button } from "antd";
 import { FaTrash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ interface AddNewProfileModalProps {
 }
 
 interface Profile {
-	id: string; // Field array automatically includes an "id"
+	id: string;
 	platform: string;
 	username: string;
 }
@@ -18,7 +18,7 @@ interface Profile {
 const AddNewProfileModal = ({ toggleModal }: AddNewProfileModalProps) => {
 	const { control, handleSubmit, register, reset } = useForm({
 		defaultValues: {
-			Contact: [] as Profile[], // Explicitly typing Contact as Profile[]
+			Contact: [] as Profile[],
 		},
 	});
 
@@ -85,7 +85,6 @@ const AddNewProfileModal = ({ toggleModal }: AddNewProfileModalProps) => {
 					</div>
 				</div>
 
-				{/* Add Platform Section */}
 				<div className="mt-4">
 					<h2 className="md:text-lg text-sm font-semibold">Add New Platform</h2>
 					<form
@@ -103,7 +102,6 @@ const AddNewProfileModal = ({ toggleModal }: AddNewProfileModalProps) => {
 					</form>
 				</div>
 
-				{/* Buttons */}
 				<div className="mt-4 flex justify-between">
 					<Button type="link" onClick={toggleModal} className="px-0">
 						Cancel

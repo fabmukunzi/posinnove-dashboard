@@ -10,25 +10,30 @@ const { Sider, Content } = Layout;
 const DashboardLayout = ({ children }: React.PropsWithChildren) => {
 	const router = useRouter();
 	const { pathname } = router;
-	const hiddenMenuLinks = ['/dashboard/profile', '/dashboard/projects','/dashboard'];
+	const hiddenMenuLinks = [
+		"/dashboard/profile",
+		"/dashboard/projects",
+		"/dashboard",
+	];
 
 	const withoutSidebar = hiddenMenuLinks.includes(pathname);
-
 
 	return (
 		<AntdRegistry>
 			<Layout>
 				<DashboardHeader />
-				<Layout hasSider={!withoutSidebar} className="bg-white">
+				<Layout hasSider={!withoutSidebar} className="bg-white mt-24">
 					{!withoutSidebar && (
 						<Sider
 							theme="light"
-							className="fixed top-[100px] left-0 border border-primary rounded-r-2xl overflow-hidden h-[70vh] w-full"
+							className="fixed top-[130px] left-0 border border-primary rounded-r-2xl overflow-hidden h-[70vh] w-full"
 						>
 							<DashboardSideMenu />
 						</Sider>
 					)}
-					<Layout className={withoutSidebar ? "bg-white" : "ml-[250px] bg-white"}>
+					<Layout
+						className={withoutSidebar ? "bg-white" : "ml-[250px] bg-white"}
+					>
 						<Content className="p-[16px] min-h-[90vh]">{children}</Content>
 					</Layout>
 				</Layout>

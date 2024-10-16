@@ -51,7 +51,7 @@ const DashboardProfile = () => {
 			</div>
 		);
 	return (
-		<div className="">
+		<div className="mt-4">
 			<div className="">
 				<div className="">
 					<div className=" h-60 border-4 border-primary rounded-t-[2rem] overflow-hidden">
