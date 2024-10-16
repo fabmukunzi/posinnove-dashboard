@@ -11,6 +11,8 @@ import { defaultProfileImage } from "@utils/profileDataUtils";
 import { useGetInterestQuery } from "@store/actions/interest";
 import InterestModal from "@components/common/InterestModal";
 import Image from "next/image";
+import ExpertiesModal from "@components/common/ExpertiesModal";
+import { useGetExpertiesQuery } from "@store/actions/experties";
 
 const DashboardProfile = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -20,6 +22,11 @@ const DashboardProfile = () => {
 	const [openAddModal, setOpenAddModal] = useState(false);
 	const toggleAddModal = () => {
 		setOpenAddModal(!openAddModal);
+	};
+
+	const [openExperties, setOpenExperties] = useState(false);
+	const toggleExpertiesModal = () => {
+		setOpenExperties(!openExperties);
 	};
 
 	const { data: interestData, isLoading } = useGetInterestQuery();
@@ -34,6 +41,9 @@ const DashboardProfile = () => {
 			skip: !token,
 		}
 	);
+	const { data } = useGetExpertiesQuery();
+
+	const experties = data?.user?.expertise;
 
 	useEffect(() => {
 		if (!token) {
@@ -58,7 +68,7 @@ const DashboardProfile = () => {
 						<Image src={logo} alt="profile_image" className="w-full h-full" />
 					</div>
 					<div className="relative ml-20 top-0">
-						<div className="absolute -top-16 bg-white w-32 h-32 rounded-2xl border-2 border-white overflow-hidden">
+						<div className="absolute -top-16 bg-white w-32 h-32 rounded-[1rem] border-4 border-[#666666] overflow-hidden">
 							{load ? (
 								<svg
 									className="w-full h-full text-gray-200 dark:text-gray-600 animate-pulse"
@@ -75,7 +85,9 @@ const DashboardProfile = () => {
 									alt="profile_image"
 									width={100}
 									height={100}
-									className="w-full h-full object-cover rounded-full"
+									className={`w-full h-full object-cover ${
+										profile?.data?.profileImage ? "bg-none" : "bg-[#666666]"
+									} `}
 								/>
 							)}
 						</div>
@@ -85,7 +97,9 @@ const DashboardProfile = () => {
 									{isLoading ? (
 										<div className="w-[40%] h-4 bg-gray-600 animate-pulse rounded"></div>
 									) : (
-										profile?.data?.firstName + profile?.data?.lastName
+										<>
+											{`${profile?.data?.firstName} ${profile?.data?.lastName}`}
+										</>
 									)}
 								</h1>
 								<p>
@@ -127,40 +141,20 @@ const DashboardProfile = () => {
 									</button>
 								</div>
 							</div>
-							<div className="w-full mt-8 bg-white p-4 _shadow rounded-lg flex flex-col gap-2">
-								<div className="flex items-center gap-2">
-									<h1 className="text-2xl ">Interests</h1>
-									<button
-										className="text-white rounded-lg text-sm px-8 py-1 bg-primary"
-										onClick={() => toggleAddModal()}
-									>
-										Add
-									</button>
-								</div>
-								<div
-									className={`${
-										isLoading ? "grid grid-cols-4" : "flex flex-row flex-wrap"
-									}  gap-2 `}
-								>
-									{isLoading ? (
-										[0, 1, 2, 3].map((skel) => (
-											<div
-												key={skel}
-												className="rounded-r-full rounded-l-full border w-full h-8 animate-pulse bg-black/20"
-											></div>
-										))
-									) : fileteredInterest.length > 0 ? (
-										fileteredInterest?.map((interest: string, idx: number) => (
-											<div
-												className="px-4 py-1 rounded-full border flex items-center justify-center"
-												key={idx}
-											>
-												{interest}
-											</div>
-										))
+							<div>
+								<div className="p-4 mt-10 ml-16 _shadow rounded-xl">
+									<h1 className="text-primary font-black text-2xl">Bio</h1>
+									{profile?.data?.About && profile?.data?.About?.length > 0 ? (
+										<div>{profile?.data?.About}</div>
 									) : (
-										<div className="w-full h-full items-center justify-center text-xl mt-4 text-black/50">
-											You have not added interest yet
+										<div className="text-lg flex items-center gap-2">
+											Please add bio
+											<button
+												className="text-white rounded-lg text-base px-8 py-1 bg-primary"
+												onClick={toggleEditModal}
+											>
+												Add
+											</button>
 										</div>
 									)}
 								</div>
@@ -168,25 +162,96 @@ const DashboardProfile = () => {
 						</div>
 					</div>
 				</div>
-				<div className="p-4 mt-10 ml-16 _shadow rounded-xl">
-					<h1 className="text-primary font-black text-2xl">Bio</h1>
-					{profile?.data?.About?.length > 0 ? (
-						<div>{profile?.data?.About}</div>
-					) : (
-						<div className="text-lg flex items-center gap-2">
-							Please add bio
+				<div className="flex gap-5 ml-16">
+					<div className="w-full mt-8 bg-white p-4 _shadow rounded-lg flex flex-col gap-4">
+						<div className="flex items-center gap-2">
+							<h1 className="text-2xl ">Interests</h1>
 							<button
-								className="text-white rounded-lg text-base px-8 py-1 bg-primary"
-								onClick={toggleEditModal}
+								className="text-white rounded-lg text-sm px-8 py-1 bg-primary"
+								onClick={() => toggleAddModal()}
 							>
 								Add
 							</button>
 						</div>
-					)}
+						<div
+							className={`${
+								isLoading ? "grid grid-cols-4" : "flex flex-row flex-wrap"
+							}  gap-2 `}
+						>
+							{isLoading ? (
+								[0, 1, 2, 3].map((skel) => (
+									<div
+										key={skel}
+										className="rounded-r-full rounded-l-full border w-full h-8 animate-pulse bg-black/20"
+									></div>
+								))
+							) : fileteredInterest?.length > 0 ? (
+								fileteredInterest?.map((interest: string, idx: number) => (
+									<div
+										className="px-4 py-1 rounded-full border flex items-center justify-center"
+										key={idx}
+									>
+										{interest}
+									</div>
+								))
+							) : (
+								<div className="w-full h-full items-center justify-center text-xl mt-4 text-black/50">
+									You have not added interest yet
+								</div>
+							)}
+						</div>
+					</div>
+					<div className="w-full mt-8 bg-white p-4 _shadow rounded-lg flex flex-col gap-4">
+						<div className="flex items-center gap-2">
+							<h1 className="text-2xl ">Experties</h1>
+							<button
+								className="text-white rounded-lg text-sm px-8 py-1 bg-primary"
+								onClick={() => toggleExpertiesModal()}
+							>
+								Add
+							</button>
+						</div>
+						<div
+							className={`${
+								isLoading ? "grid grid-cols-4" : "flex flex-row flex-wrap"
+							}  gap-2 `}
+						>
+							{isLoading ? (
+								[0, 1, 2, 3].map((skel) => (
+									<div
+										key={skel}
+										className="rounded-r-full rounded-l-full border w-full h-8 animate-pulse bg-black/20"
+									></div>
+								))
+							) : experties?.length > 0 ? (
+								experties?.map((expert: string, idx: number) => (
+									<div
+										className="px-4 py-1 rounded-full border flex items-center justify-center"
+										key={idx}
+									>
+										{expert}
+									</div>
+								))
+							) : (
+								<div className="w-full h-full items-center justify-center text-xl mt-4 text-black/50">
+									You have not added experties yet
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+				{/* profile */}
+				<div className="ml-16 mt-10">
+					<h1 className="text-lg font-bold my-2">Portifolio</h1>
+					<div className=" text-black/60 text-2xl border border-dashed rounded py-10 text-center">
+						Not participating in any projects yet. Join an experience to access
+						projects.
+					</div>
 				</div>
 			</div>
 			{openEditModal && <EditProfileModal toggleModal={toggleEditModal} />}
 			{openAddModal && <InterestModal toggleModal={toggleAddModal} />}
+			{openExperties && <ExpertiesModal toggleModal={toggleExpertiesModal} />}
 		</div>
 	);
 };
