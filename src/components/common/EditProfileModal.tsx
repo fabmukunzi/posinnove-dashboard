@@ -227,7 +227,7 @@ const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
 								placeholder="Add bio"
 								name="About"
 								rows={2}
-								maxLength={255}
+								maxLength={500}
 							></textarea>
 						</div>
 						<div className="flex items-center gap-5">

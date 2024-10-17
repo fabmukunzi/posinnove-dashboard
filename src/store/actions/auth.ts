@@ -21,6 +21,7 @@ const userEndpoints = baseAPI.injectEndpoints({
 				url: "/api/users/profile",
 				method: "GET",
 			}),
+			providesTags: ["profile"],
 		}),
 		updateProfile: builder.mutation<any, any>({
 			query: (data) => ({
@@ -28,6 +29,7 @@ const userEndpoints = baseAPI.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
+			invalidatesTags: ["profile"],
 		}),
 		verifyEmail: builder.query<void, string>({
 			query: (token) => ({
