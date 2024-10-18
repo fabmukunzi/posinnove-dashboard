@@ -26,14 +26,13 @@ const DashboardLayout = ({ children }: React.PropsWithChildren) => {
 					{!withoutSidebar && (
 						<Sider
 							theme="light"
-							className="fixed top-[130px] left-0 border border-primary rounded-r-2xl overflow-hidden h-[70vh] w-full"
+							className="top-[100px] left-12 overflow-hidden"
+							width={300} 
 						>
 							<DashboardSideMenu />
 						</Sider>
 					)}
-					<Layout
-						className={withoutSidebar ? "bg-white" : "ml-[250px] bg-white"}
-					>
+					<Layout className="ml-[100px] bg-white">
 						<Content className="p-[16px] min-h-[90vh]">{children}</Content>
 					</Layout>
 				</Layout>

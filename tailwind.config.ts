@@ -13,7 +13,9 @@ const config: Config = {
         primary: '#091e6a',
         surface: '#f8f8f8',
         borderColor:'#00000058',
-        gray:"#45464"
+        gray:"#45464",
+        customBlack: '#000000',
+        grayy: "#000000"
       },
     },
   },

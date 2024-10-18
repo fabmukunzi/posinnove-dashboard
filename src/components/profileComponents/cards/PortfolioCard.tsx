@@ -18,7 +18,7 @@ const PortfolioCard = ({
 		<div className="w-full h-full rounded-lg border p-3">
 			<div className="flex flex-col items-center justify-between h-full w-full">
 				<div className="w-full h-52 md:h-80 lg:h-64">
-					<img
+					<Image
 						// preview={false}
 						src={image}
 						alt="image"
