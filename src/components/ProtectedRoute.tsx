@@ -16,8 +16,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 		if (!isLoading && !token) {
 			router.push("/login");
 		}
-	}, [token]);
-
+	}, [isLoading, token, router]); 
 	if (isLoading) {
 		return (
 			<div className="w-full h-full flex justify-center items-center fixed inset-0">
