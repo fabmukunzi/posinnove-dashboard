@@ -16,7 +16,6 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Continue with the next middleware or request if no redirect is needed
   return NextResponse.next();
 }
 

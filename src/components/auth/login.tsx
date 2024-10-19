@@ -30,10 +30,12 @@ const LoginComponent: React.FC = () => {
 			const { data } = await login(values).unwrap();
 			const decoded = decodeToken(data.token);
 
-			// Set the cookie using nookies
+			console.log(data);
+			
 			setCookie(null, "access_token", data.token, {
-				maxAge: 30 * 24 * 60 * 60, // Expires in 30 days
+				maxAge: 30 * 24 * 60 * 60,
 				path: '/',
+				secure: true,
 			});
 
 			dispatch(setToken(data.token));
