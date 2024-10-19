@@ -3,7 +3,7 @@
 import { useLoginMutation } from "@store/actions/auth";
 import { setToken } from "@store/reducers/app";
 import decodeToken from "@utils/auth/decodeUser";
-import { setCookie } from "@utils/cookies";
+import { setCookie } from "nookies"; // Import setCookie from nookies
 import { logo } from "@utils/images";
 import { Button, Checkbox, Form, Input, Typography, notification } from "antd";
 import Image from "next/image";
@@ -13,18 +13,33 @@ import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const LoginComponent = () => {
+interface LoginValues {
+	email: string;
+	password: string;
+	remember?: boolean;
+}
+
+const LoginComponent: React.FC = () => {
 	const { Title } = Typography;
 	const [login, { isLoading }] = useLoginMutation();
 	const { push } = useRouter();
 	const dispatch = useDispatch();
-	const handleLogin = async (values: any) => {
+
+	const handleLogin = async (values: LoginValues) => {
 		try {
 			const { data } = await login(values).unwrap();
-
 			const decoded = decodeToken(data.token);
-			// setCookie("access_token", data?.token);
+
+			console.log(data);
+			
+			setCookie(null, "access_token", data.token, {
+				maxAge: 30 * 24 * 60 * 60,
+				path: '/',
+				secure: true,
+			});
+
 			dispatch(setToken(data.token));
+
 			if (decoded) {
 				toast.success("Login success");
 				setTimeout(() => {
@@ -34,12 +49,13 @@ const LoginComponent = () => {
 				push("/");
 			}
 		} catch (error: any) {
-			console.log(error, "errrrrr");
+			console.error(error);
 			notification.error({
 				message: error?.data?.message,
 			});
 		}
 	};
+
 	return (
 		<>
 			<ToastContainer />
@@ -73,7 +89,7 @@ const LoginComponent = () => {
 							{
 								required: true,
 							},
-							{ min: 6, message: "Password must be atleast 6 characters" },
+							{ min: 6, message: "Password must be at least 6 characters" },
 						]}
 					>
 						<Input.Password placeholder="Enter your password" />
