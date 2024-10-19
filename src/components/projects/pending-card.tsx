@@ -13,16 +13,16 @@ function PendingCard({ project }: { project: any }) {
     const backlogPercentage = Math.floor((project.status.backlog / totalTasks) * 100);
 
     return (
-        <div className='border border-borderColor w-full sm:w-1/2 lg:w-1/3 rounded-xl bg-surface p-4'>
+        <div className='border w-full border-borderColor rounded-xl bg-surface p-4'>
             <div className='leading-2'>
                 <div className='p-5'>
                     <div>
-                        <h1 className='text-lg font-bold'>{project.title}</h1>
+                        <h1 className='text-lg font-bold overflow-hidden whitespace-nowrap  text-ellipsis'>{project.title}</h1>
                         <div className='w-32 h-0.5 bg-primary' />
                     </div>
 
                     {/* Task Details */}
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 text-[100%]'>
                         {/* Task Done */}
                         <div className='flex justify-between'>
                             <div className='flex items-center gap-2'>
@@ -82,12 +82,13 @@ function PendingCard({ project }: { project: any }) {
                 </div>
 
                 {/* Company and Button */}
-                <div className='flex justify-between items-center px-5 py-2'>
-                    <div className='flex gap-2 items-center'>
+                <div className='mx-5 flex justify-between items-center px-5 py-2'>
+                    <div className='flex flex-wrap w-full gap-4 items-center'>
                         <Image src={project.campany.logo} alt={project.campany.name} />
-                        <span>{project.campany.name}</span>
+                        <span className='text-sm'>{project.campany.name}</span>
+                        <Button className='rounded-2xl w-[90%] text-[75%] px-2'>Go to Project</Button>
                     </div>
-                    <Button className='rounded-2xl'>Go to Project</Button>
+                   
                 </div>
             </div>
         </div>

@@ -39,7 +39,7 @@ const CurrentsProjects = () => {
           <h1 className='text-3xl font-semibold py-5 px-10'>My Projects</h1>
           <Carousel afterChange={onChange} dotPosition='bottom'>
               {projectChunks.map((chunk, index) => (
-                  <div key={index} className='flex flex-col md:flex-row justify-center gap-5'>
+                  <div key={index} className=' grid grid-flow-col auto-cols-fr gap-4'>
                       {chunk.map((project, idx) => (
                           <PendingCard key={idx} project={project} />
                       ))}

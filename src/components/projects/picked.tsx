@@ -27,10 +27,10 @@ function Picked() {
         console.log(key);
     };
     return (
-        <div className='w-full max-h-[80vh] px-4 md:px-10 mt-10'>
+        <div className='w-full max-h-[80vh] px-4  md:px-10 mt-10'>
             <div className='bg-[#D6DEF6] flex justify-center p-4 rounded-3xl items-center flex-col'>
                 <div className='flex flex-col gap-8 justify-center items-center'>
-                    <h1 className='text-5xl font-semibold'>Pick from <span className='text-primary'>200+</span> projects</h1>
+                    <h1 className='text-5xl sm:text-2xl md:text-2xl text-center  font-semibold'>Pick from <span className='text-primary'>200+</span> projects</h1>
                     <div className='flex justify-between items-center px-2 w-96 rounded-lg text-gray-600 bg-surface'>
                         <input placeholder='Search projects, skills, companies...' type="text" className='h-10  w-56 bg-transparent outline-none px-2' />
                         <div className='p-2'><Search /></div>

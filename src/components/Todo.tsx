@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CaretRightOutlined, PauseCircleOutlined, PlusOutlined, StopOutlined } from '@ant-design/icons';
 import { Button, List, Typography } from 'antd';
 import { useReactMediaRecorder } from 'react-media-recorder';
@@ -13,13 +13,21 @@ const TodoList = () => {
       ];
   const [isRecording, setIsRecording] = useState(null);
   const [timer, setTimer] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
-  const {
-    startRecording,
-    stopRecording,
-    mediaBlobUrl,
-    status,
-  } = useReactMediaRecorder({ audio: true });
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const { startRecording, stopRecording, mediaBlobUrl } = 
+   { startRecording: () => {}, stopRecording: () => {}, mediaBlobUrl: null };
+  // const {
+  //   startRecording,
+  //   stopRecording,
+  //   mediaBlobUrl,
+  //   status,
+  // } = useReactMediaRecorder({ audio: true });
+  
 
   const handleRecordClick = (index:any) => {
     if (isRecording === index) {
