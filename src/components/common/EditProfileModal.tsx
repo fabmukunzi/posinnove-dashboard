@@ -7,6 +7,7 @@ import {
 	useUpdateProfileMutation,
 	useGetProfileQuery,
 } from "@store/actions/auth";
+import Image from "next/image";
 
 interface EditProfileModalProps {
 	toggleModal: () => void;
@@ -101,7 +102,7 @@ const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
 				<form onSubmit={handleSubmit(onSubmit)} className="flex gap-10">
 					<div className="relative">
 						<div className="w-40 h-40 rounded-full overflow-hidden bg-gray-200 relative">
-							<img
+							<Image
 								src={
 									imagePreview ||
 									profileData?.data.profileImage ||
