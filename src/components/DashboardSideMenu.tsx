@@ -14,17 +14,22 @@ import { VscFolderLibrary } from 'react-icons/vsc';
 
 const DashboardSideMenu = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const { pathname } = useRouter();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      if (token) {
+      // Retrieve cookies from document
+      const cookies = document.cookie.split('; ');
+      const accessTokenCookie = cookies.find(cookie => cookie.startsWith('access_token='));
+
+      if (accessTokenCookie) {
+        const token = accessTokenCookie.split('=')[1]; // Get the value after '='
         const user = decodeToken(token);
         setLoggedInUser(user);
-        console.log(loggedInUser, 'loooooooooog');
+        console.log(user, 'loooooooooog');
       }
     }
-  }, [loggedInUser]);
-  const { pathname } = useRouter();
+  }, []); // Empty dependency array to run once
 
   const menuItems = [
     {
@@ -88,11 +93,10 @@ const DashboardSideMenu = () => {
         className="flex flex-col space-y-10 h-full bg-[#f7f8fb]"
         items={menuItems.map((item) => ({
           ...item,
-          className: `flex items-center p-4 text-primary ${
-            pathname === item.key
+          className: `flex items-center p-4 text-primary ${pathname === item.key
               ? 'bg-[#d6e1fc] text-primary'
               : 'hover:bg-[#d6e1fc]'
-          }`,
+            }`,
         }))}
       />
     </div>

@@ -1,17 +1,25 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export default function middleware(req: NextRequest) {
-  const token = req.cookies.get('posinnove-token');
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('access_token')?.value;
+  const { pathname } = request.nextUrl;
+  if (token) {
+    if (pathname === '/login') {
+      return Response.redirect(new URL('/', request.url));
+    }
+    if (!pathname.startsWith('/') && pathname !== '/') {
+      return Response.redirect(new URL('/', request.url));
+    }
+  } else {
+    if (pathname !== '/login') {
+      return Response.redirect(new URL('/login', request.url));
+    }
+  }
 
-  // if (!token) {
-  //   const loginUrl = new URL('/login', req.url);
-  //   return NextResponse.redirect(loginUrl);
-  // }
-
+  // Continue with the next middleware or request if no redirect is needed
   return NextResponse.next();
 }
 
 export const config = {
-	matcher: "/:path*", // Match all routes
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
 };
