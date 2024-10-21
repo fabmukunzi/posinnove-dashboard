@@ -1,18 +1,27 @@
+import { useForgotPasswordMutation } from "@store/actions/auth";
 import { Button, Form, Input } from "antd";
-import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPassword = () => {
-	const [loading, setLoading] = useState(false);
+	const [forgotPassword, { isLoading }] = useForgotPasswordMutation(); // Use the mutation hook
 
-	const handleForgotPassword = () => {
-		setLoading(true);
-		console.log("Done");
-		setLoading(false);
+	const handleForgotPassword = async (values: { forgotPassword: string }) => {
+		try {
+			// Call the mutation and pass the form data
+			const res = await forgotPassword({
+				email: values.forgotPassword,
+			}).unwrap();
+			toast.success(res.message);
+		} catch (error: any) {
+			toast.error(error?.data?.message);
+		}
 	};
+
 	return (
-		<div className="w-1/2 h-96 flex items-center justify-center p-5 ">
+		<div className="w-1/2 h-96 flex items-center justify-center p-5">
 			<Form
-				onFinish={handleForgotPassword}
+				onFinish={(values) => handleForgotPassword(values)}
 				requiredMark={false}
 				layout="vertical"
 				className="w-full bg-white h-full p-10 rounded shadow-xl"
@@ -24,22 +33,24 @@ const ForgotPassword = () => {
 					rules={[
 						{
 							required: true,
+							message: "Please enter your email address",
 						},
-						{ type: "email", message: "Please enter your email address" },
+						{ type: "email", message: "Please enter a valid email address" },
 					]}
 				>
 					<Input placeholder="Enter your email address" />
 				</Form.Item>
 				<Button
-					loading={loading}
+					loading={isLoading}
 					className="my-3"
 					htmlType="submit"
 					type="primary"
 					block
 				>
-					send
+					Send
 				</Button>
 			</Form>
+			<ToastContainer />
 		</div>
 	);
 };
