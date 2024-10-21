@@ -1,11 +1,12 @@
 import React from "react";
 import ForgotPassword from "@components/auth/ForgotPassword";
+import AuthLayout from "@layout/authLayout";
 
 const page = () => {
 	return (
-		<div className=" flex flex-col items-center justify-center h-screen">
+		<AuthLayout>
 			<ForgotPassword />
-		</div>
+		</AuthLayout>
 	);
 };
 

@@ -32,7 +32,7 @@ const SignupComponent = () => {
 			notification.success({
 				message,
 			});
-			push("/signup");
+			push("/login");
 		} catch (error: any) {
 			notification.error({
 				message: error.data.message,
