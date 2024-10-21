@@ -16,6 +16,23 @@ const userEndpoints = baseAPI.injectEndpoints({
 				body,
 			}),
 		}),
+		forgotPassword: builder.mutation<any, any>({
+			query: (body) => ({
+				url: "/api/users/forgetpassword",
+				method: "POST",
+				body,
+			}),
+		}),
+		resetPassword: builder.mutation<
+			any,
+			{ token: string; newPassword: string }
+		>({
+			query: ({ token, newPassword }) => ({
+				url: `/api/users/resetpassword/${token}`,
+				method: "PATCH",
+				body: { newPassword },
+			}),
+		}),
 		getProfile: builder.query({
 			query: () => ({
 				url: "/api/users/profile",
@@ -46,4 +63,6 @@ export const {
 	useGetProfileQuery,
 	useVerifyEmailQuery,
 	useUpdateProfileMutation,
+	useForgotPasswordMutation,
+	useResetPasswordMutation,
 } = userEndpoints;
