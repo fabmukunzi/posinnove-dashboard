@@ -5,7 +5,6 @@ import {
 	MenuProps,
 	Dropdown,
 	Button,
-	message,
 	Avatar,
 	Space,
 	Drawer,
@@ -23,40 +22,18 @@ import {
 	User,
 	Menu as MenuIcon,
 } from "lucide-react";
-import profile from "../assets/profile-pos.jpg";
 import { useGetProfileQuery } from "@store/actions/auth";
 import { defaultProfileImage } from "@utils/profileDataUtils";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
 
 const { Header } = Layout;
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuProps["items"] = [
-	{
-		label: <Link href="/my-profile">View Profile</Link>,
-		key: "1",
-		icon: <User />,
-	},
-	{
-		label: "Settings",
-		key: "2",
-		icon: <Settings />,
-	},
-	{
-		label: "Logout",
-		key: "3",
-		icon: <LogOut />,
-		danger: true,
-	},
-];
-
-const menuProps = {
-	items,
-};
-
 const DashboardHeader = () => {
 	const { isLoading, data } = useGetProfileQuery({});
-	// console.log(data.data, "Profile data?");
 	const profileImage = data?.data?.profileImage;
+	const router = useRouter(); // Initialize router here
 
 	const [current, setCurrent] = useState("home");
 	const [hovered, setHovered] = useState<string | null>(null);
@@ -80,6 +57,36 @@ const DashboardHeader = () => {
 
 	const closeDrawer = () => {
 		setDrawerVisible(false);
+	};
+
+	const logout = () => {
+		Cookies.remove('access_token');
+		console.log("Logged out");
+		router.push('/'); // Use router here
+	};
+
+	const items: MenuProps["items"] = [
+		{
+			label: <Link href="/my-profile">View Profile</Link>,
+			key: "1",
+			icon: <User />,
+		},
+		{
+			label: "Settings",
+			key: "2",
+			icon: <Settings />,
+		},
+		{
+			label: "Logout",
+			key: "3",
+			icon: <LogOut />,
+			danger: true,
+			onClick: logout, // Reference the logout function here
+		},
+	];
+
+	const menuProps = {
+		items,
 	};
 
 	const navMenu: MenuItem[] = [
@@ -142,9 +149,7 @@ const DashboardHeader = () => {
 	return (
 		<Header className="!bg-white flex items-center justify-between gap-52 px-10 py-12 shadow-sm w-full fixed z-50 top-0">
 			<div className="flex items-center gap-2">
-				<div>
-					<Image src={logo.src} alt="dashboard logo" width={182} height={59} />
-				</div>
+				<Image src={logo.src} alt="dashboard logo" width={182} height={59} />
 			</div>
 			<div className="hidden lg:flex items-center w-full justify-between bg-[#F2F2F2] rounded-3xl">
 				<Menu
@@ -158,7 +163,7 @@ const DashboardHeader = () => {
 					<input
 						placeholder="Search anything..."
 						type="text"
-						className="h-10  w-56 bg-transparent outline-none px-2"
+						className="h-10 w-56 bg-transparent outline-none px-2"
 					/>
 					<div className="p-2">
 						<Search />
