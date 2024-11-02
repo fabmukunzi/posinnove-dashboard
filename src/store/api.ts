@@ -10,7 +10,6 @@ const baseAPI = createApi({
 			const {
 				appReducer: { token },
 			} = getState() as RootState;
-			console.log(token, "===========>");
 			if (token) headers.set("authorization", `Bearer ${token}`);
 			return headers;
 		},

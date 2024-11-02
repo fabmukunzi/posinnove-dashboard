@@ -33,7 +33,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 const DashboardHeader = () => {
 	const { isLoading, data } = useGetProfileQuery({});
 	const profileImage = data?.data?.profileImage;
-	const router = useRouter(); // Initialize router here
+	const router = useRouter();
 
 	const [current, setCurrent] = useState("home");
 	const [hovered, setHovered] = useState<string | null>(null);
@@ -41,7 +41,7 @@ const DashboardHeader = () => {
 
 	const onClick: MenuProps["onClick"] = (e) => {
 		setCurrent(e.key);
-	};
+	};	
 
 	const handleMouseEnter = (key: string) => {
 		setHovered(key);
@@ -62,7 +62,7 @@ const DashboardHeader = () => {
 	const logout = () => {
 		Cookies.remove('access_token');
 		console.log("Logged out");
-		router.push('/'); // Use router here
+		router.push('/');
 	};
 
 	const items: MenuProps["items"] = [
@@ -81,7 +81,7 @@ const DashboardHeader = () => {
 			key: "3",
 			icon: <LogOut />,
 			danger: true,
-			onClick: logout, // Reference the logout function here
+			onClick: logout,
 		},
 	];
 
