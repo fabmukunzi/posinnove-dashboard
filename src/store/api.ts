@@ -14,7 +14,7 @@ const baseAPI = createApi({
 			return headers;
 		},
 	}),
-	tagTypes: ["profile", "expertise", "interest"],
+	tagTypes: ["profile", "expertise", "interest","users"],
 	endpoints: () => ({}),
 });
 

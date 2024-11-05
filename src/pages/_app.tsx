@@ -22,9 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				<Provider store={store}>
 					{isDashboardRoute ? (
 						<ProtectedRoute>
-							<DashboardLayout>
 								<Component {...pageProps} />
-							</DashboardLayout>
 						</ProtectedRoute>
 					) : (
 						<Component {...pageProps} />
