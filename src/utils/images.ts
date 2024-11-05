@@ -1,4 +1,5 @@
 import logo from "@assets/logo.svg";
+import logo1 from "@assets/logo1.png"
 import homeImage from "@assets/home.svg";
 import dashboardLogo from "@assets/home_icon.png";
 import dashboardUserProfile from "@assets/Dashboard_user_rofile.svg";
@@ -21,5 +22,6 @@ export {
 	support,
 	posinnove_logo,
 	profile,
-	logo_col
+	logo_col,
+	logo1,
 };

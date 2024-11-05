@@ -47,10 +47,10 @@ function PersonalCard({ project }: { project: any }) {
               <span className="text-xs">{tech}</span>
             </div>
           ))}
-        </div> */}
-        {/* <Link href={routes.projects.url+"/"+project?.id}>
-		<Button className="rounded-xl h-8">See details</Button>
-		</Link> */}
+        </div>
+		<Link href={routes.projects.url+"/"+project?.id}>
+		<Button className="rounded-xl h-8 w-[80%]">See details</Button>
+		</Link>)*/}
         <div className="flex flex-wrap items-center gap-2">
           {project?.projectAuthor?.profileImage ? (
             <Image

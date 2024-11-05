@@ -28,7 +28,7 @@ const PersonalProjects = () => {
           )}
 
           <NewProject open={isOpen} close={close} />
-          <div className="grid md:grid-cols-3 gap-3 w-full my-8">
+          <div className="grid xlg:grid-cols-3 md:grid-cols-2 gap-3 w-full my-8">
             {projects?.data?.projects?.map((project: any, index: number) => (
               <ProjectCard key={index} project={project} />
             ))}

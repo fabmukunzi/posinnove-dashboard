@@ -23,6 +23,7 @@ const config: Config = {
         xmd: '600px',
         md: '768px',
         lg: '976px',
+        xlg: '1040px',
         mdl: '1240px',
         xl: '1440px',
       },

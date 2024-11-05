@@ -1,13 +1,17 @@
+import { EyeOutlined } from '@ant-design/icons';
 import AdminLayout from '@layout/adminLayout';
 import { useGetSingleProjectQuery } from '@store/actions/projects';
 import { Avatar, Button, Card, Image, notification, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { ExternalLink, Flag, Share, User } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 
 const SingleProject = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [currentPreview, setCurrentPreview] = useState<string>('');
   const params = useParams();
   const { data, isLoading } = useGetSingleProjectQuery(
     params?.projectId?.toString(),
@@ -130,7 +134,40 @@ const SingleProject = () => {
                 ></embed>
               ))}
             </div>
-          </AdminLayout>
+            {/* <>
+        <div className="mt-5">
+        <Typography.Title level={3} className="font-semibold">
+          Project Uploads
+        </Typography.Title>
+        {data?.data?.uploads?.map((upload: string) => (
+          <div key={upload} className="relative my-8">
+            <embed
+              className="w-full h-[700px] border-2 border-primary"
+              src={upload}
+            />
+            {isMobile && (
+              <Button
+                type="primary"
+                icon={<EyeOutlined />}
+                className="absolute top-2 right-2"
+                onClick={() => handlePreview(upload)}
+              />
+            )}
+          </div>
+        ))}
+        <Modal
+          open={previewVisible}
+          title="Preview Upload"
+          footer={null}
+          onCancel={() => setPreviewVisible(false)}
+          width="100%"
+          centered
+        >
+          <embed src={currentPreview} className="w-full h-[90vh]" />
+        </Modal>
+      </div>
+      </> */}
+    </AdminLayout>
         </>
       )}
     </div>
