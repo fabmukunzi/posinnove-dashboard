@@ -9,7 +9,15 @@ const projectsEndpoints = baseAPI.injectEndpoints({
 			}),
 			providesTags: ["projects"],
 		}),
+		addProject: builder.mutation<any, any>({
+			query: (body: any) => ({
+				url: "/api/projects",
+				method: "POST",
+				body,
+			}),
+			invalidatesTags: ["projects"],
+		}),
 	}),
 });
 
-export const { useGetProjectsQuery } = projectsEndpoints;
+export const { useGetProjectsQuery, useAddProjectMutation } = projectsEndpoints;
