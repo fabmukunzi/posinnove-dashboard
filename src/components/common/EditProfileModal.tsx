@@ -1,257 +1,201 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { notification } from "antd";
-import { FaCloudUploadAlt } from "react-icons/fa";
-import { defaultProfileImage } from "@utils/profileDataUtils";
+import { useMemo, useState } from 'react';
 import {
-	useUpdateProfileMutation,
-	useGetProfileQuery,
-} from "@store/actions/auth";
-import Image from "next/image";
+  Form,
+  Input,
+  Select,
+  Button,
+  Upload,
+  notification,
+  Modal,
+  Avatar,
+  Typography,
+} from 'antd';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import countryList from 'react-select-country-list';
+import { defaultProfileImage } from '@utils/profileDataUtils';
+import {
+  useUpdateProfileMutation,
+  useGetProfileQuery,
+} from '@store/actions/auth';
 
 interface EditProfileModalProps {
-	toggleModal: () => void;
+  visible: boolean;
+  toggleModal: () => void;
 }
 
-const EditProfileModal = ({ toggleModal }: EditProfileModalProps) => {
-	const { data: profileData, isLoading: isProfileLoading } = useGetProfileQuery(
-		{}
-	);
-	const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
+  const { data: profileData, isLoading: isProfileLoading } = useGetProfileQuery(
+    {}
+  );
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
-	const [imagePreview, setImagePreview] = useState<string | null>(null);
-	const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [form] = Form.useForm();
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const options = useMemo(() => countryList().getData(), []);
 
-	const {
-		register,
-		handleSubmit,
-		setValue,
-		formState: { errors },
-	} = useForm({
-		defaultValues: {
-			username: "",
-			firstName: "",
-			lastName: "",
-			gender: "",
-			institution: "",
-			country: "",
-			phone: "",
-			About: "",
-		},
-	});
+  const handleImageChange = (info: any) => {
+    const file = info.fileList[0]?.originFileObj;
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-	useEffect(() => {
-		if (profileData) {
-			setValue("username", profileData.data.username);
-			setValue("firstName", profileData.data.firstName);
-			setValue("lastName", profileData.data.lastName);
-			setValue("gender", profileData.data.gender);
-			setValue("institution", profileData.data.institution);
-			setValue("country", profileData.data.country);
-			setValue("phone", profileData.data.phone);
-			setValue("About", profileData.data.About);
-		}
-	}, [profileData, setValue]);
+  const onFinish = async (values: any) => {
+    try {
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => formData.append(key, values[key]));
+      if (selectedImage) {
+        formData.append('profileImage', selectedImage);
+      }
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (file) {
-			setSelectedImage(file);
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImagePreview(reader.result as string);
-			};
-			reader.readAsDataURL(file);
-		}
-	};
+      await updateProfile(formData).unwrap();
+      form.resetFields();
+      setImagePreview(null);
+      setSelectedImage(null);
+      notification.success({ message: 'Profile updated successfully' });
+      toggleModal();
+    } catch (error: any) {
+      notification.error({
+        message: 'Profile update failed',
+        description: error.message,
+      });
+    }
+  };
 
-	const onSubmit = async (data: any) => {
-		try {
-			const formData = new FormData();
-			formData.append("username", data.username);
-			formData.append("firstName", data.firstName);
-			formData.append("lastName", data.lastName);
-			formData.append("gender", data.gender);
-			formData.append("institution", data.institution);
-			formData.append("country", data.country);
-			formData.append("phone", data.phone);
-			formData.append("About", data.About);
+  return (
+    <Modal
+      open={visible}
+      onCancel={toggleModal}
+      footer={null}
+      className="w-[60%]"
+      title={
+        <Typography.Title level={4} className="font-semibold">
+          Edit Profile
+        </Typography.Title>
+      }
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={profileData?.data}
+        onFinish={onFinish}
+        className="flex gap-10 p-4"
+      >
+        <div className="relative mb-6">
+          <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 relative mx-auto">
+            <Avatar
+              src={
+                imagePreview ||
+                profileData?.data.profileImage ||
+                defaultProfileImage
+              }
+              size="large"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <Upload
+            beforeUpload={() => false}
+            onChange={handleImageChange}
+            showUploadList={false}
+            className="w-full flex justify-center mt-4"
+          >
+            <Button
+              icon={<FaCloudUploadAlt />}
+              className="flex items-center gap-2"
+            >
+              Upload Image
+            </Button>
+          </Upload>
+        </div>
 
-			if (selectedImage) {
-				formData.append("profileImage", selectedImage);
-			}
+        <div className="w-full">
+          <div className="flex w-full gap-4">
+            <Form.Item
+              name="username"
+              label="Username"
+              className="w-full"
+              rules={[{ required: true, message: 'Username is required' }]}
+            >
+              <Input placeholder="Username" />
+            </Form.Item>
 
-			await updateProfile(formData).unwrap();
-			notification.success({ message: "Profile updated successfully" });
-			toggleModal();
-		} catch (error: any) {
-			notification.error({
-				message: "Profile update failed",
-				description: error.message,
-			});
-		}
-	};
+            <Form.Item
+              name="firstName"
+              label="First Name"
+              className="w-full"
+              rules={[{ required: true, message: 'First Name is required' }]}
+            >
+              <Input placeholder="First Name" />
+            </Form.Item>
+          </div>
 
-	return (
-		<div className="flex items-center justify-center fixed inset-0 bg-black/20 w-full h-full text-white">
-			<div
-				className="absolute w-full h-full inset-0 -z-10 backdrop-blur-sm"
-				onClick={toggleModal}
-			></div>
-			<div className="w-4/5 max-w-3xl bg-white p-6 rounded-lg shadow-lg">
-				<form onSubmit={handleSubmit(onSubmit)} className="flex gap-10">
-					<div className="relative">
-						<div className="w-40 h-40 rounded-full overflow-hidden bg-gray-200 relative">
-							<Image
-								src={
-									imagePreview ||
-									profileData?.data.profileImage ||
-									defaultProfileImage
-								}
-								alt="Profile"
-								className="w-full h-full object-cover"
-							/>
-							<div className="absolute w-full h-full bg-black/20 inset-0"></div>
-						</div>
-						<div className="absolute top-14 left-14">
-							<FaCloudUploadAlt className="text-white text-5xl" />
-						</div>
-						<input
-							type="file"
-							accept="image/*"
-							className="absolute w-full  cursor-pointer bg-red-600 top-16 right-10 opacity-0"
-							onChange={handleImageChange}
-						/>
-					</div>
+          <div className="flex w-full gap-4">
+            <Form.Item
+              name="lastName"
+              label="Last Name"
+              className="w-full"
+              rules={[{ required: true, message: 'Last Name is required' }]}
+            >
+              <Input placeholder="Last Name" />
+            </Form.Item>
 
-					<div className="flex-grow grid grid-cols-2 gap-4">
-						<div>
-							<label htmlFor="username" className="block text-gray-700">
-								Username
-							</label>
-							<input
-								{...register("username", { required: "Username is required" })}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Username"
-								name="username"
-							/>
-							{errors.username && (
-								<span className="text-red-500">{errors.username.message}</span>
-							)}
-						</div>
-						<div>
-							<label htmlFor="firstName" className="block text-gray-700">
-								First Name
-							</label>
-							<input
-								{...register("firstName", {
-									required: "First Name is required",
-								})}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="First Name"
-								name="firstName"
-							/>
-							{errors.firstName && (
-								<span className="text-red-500">{errors.firstName.message}</span>
-							)}
-						</div>
-						<div>
-							<label htmlFor="lastName" className="block text-gray-700">
-								Last Name
-							</label>
-							<input
-								{...register("lastName", { required: "Last Name is required" })}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Last Name"
-								name="lastName"
-							/>
-							{errors.lastName && (
-								<span className="text-red-500">{errors.lastName.message}</span>
-							)}
-						</div>
-						<div>
-							<label htmlFor="gender" className="block text-gray-700">
-								Gender
-							</label>
-							<select
-								{...register("gender", { required: "Gender is required" })}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-							>
-								<option value="">Select Gender</option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
-							</select>
-							{errors.gender && (
-								<span className="text-red-500">{errors.gender.message}</span>
-							)}
-						</div>
-						<div>
-							<label htmlFor="institution" className="block text-gray-700">
-								Institution
-							</label>
-							<input
-								{...register("institution")}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Institution"
-								name="institution"
-							/>
-						</div>
-						<div>
-							<label htmlFor="country" className="block text-gray-700">
-								Country
-							</label>
-							<input
-								{...register("country")}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Country"
-								name="country"
-							/>
-						</div>
-						<div>
-							<label htmlFor="phone" className="block text-gray-700">
-								Phone
-							</label>
-							<input
-								{...register("phone")}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Phone"
-								name="phone"
-							/>
-						</div>
-						<div>
-							<label htmlFor="about" className="block text-gray-700">
-								Bio
-							</label>
-							<textarea
-								{...register("About")}
-								className="w-full p-2 border border-gray-300 rounded text-black/60"
-								placeholder="Add bio"
-								name="About"
-								rows={2}
-								maxLength={500}
-							></textarea>
-						</div>
-						<div className="flex items-center gap-5">
-							<button
-								type="button"
-								onClick={toggleModal}
-								className="text-primary p-2 px-6 rounded w-full hover:underline"
-							>
-								Cancel
-							</button>
-							<button
-								type="submit"
-								className="px-6 py-2 bg-primary text-white rounded w-full"
-								disabled={isLoading || isProfileLoading}
-							>
-								{isLoading || isProfileLoading ? "Updating..." : "Update"}
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+            <Form.Item
+              name="gender"
+              label="Gender"
+              className="w-full"
+              rules={[{ required: true, message: 'Gender is required' }]}
+            >
+              <Select placeholder="Select Gender" size="large">
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
+              </Select>
+            </Form.Item>
+          </div>
+
+          <div className="flex w-full gap-4">
+            <Form.Item name="phone" label="Phone" className="w-full">
+              <Input placeholder="Phone" />
+            </Form.Item>
+
+            <Form.Item name="country" label="Country" className="w-full">
+              <Select
+                showSearch
+                size="large"
+                options={options}
+                placeholder="Country"
+              />
+            </Form.Item>
+          </div>
+
+          <div className="flex w-full gap-4">
+            <Form.Item name="About" label="Bio" className="w-full">
+              <Input.TextArea placeholder="Add bio" rows={4} />
+            </Form.Item>
+          </div>
+
+          <Form.Item>
+            <div className="flex justify-end gap-4">
+              <Button onClick={toggleModal}>Cancel</Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading || isProfileLoading}
+              >
+                {isLoading || isProfileLoading ? 'Updating...' : 'Update'}
+              </Button>
+            </div>
+          </Form.Item>
+        </div>
+      </Form>
+    </Modal>
+  );
 };
 
 export default EditProfileModal;
