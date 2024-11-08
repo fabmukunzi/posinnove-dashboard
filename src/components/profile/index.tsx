@@ -10,8 +10,9 @@ import { Button, Image, notification, Tag, Typography } from 'antd';
 import { Copy, Mail, Pen, Phone, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { PlusOutlined } from '@ant-design/icons';
+import Loader from '@components/common/loader';
 
-const DashboardProfile = () => {
+const ProfileComponent = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const toggleEditModal = () => {
     setOpenEditModal(!openEditModal);
@@ -22,7 +23,10 @@ const DashboardProfile = () => {
 
   const { token } = useSelector((state: RootState) => state.appReducer);
 
-  const { data: profile } = useGetProfileQuery({}, { skip: !token });
+  const { data: profile, isLoading: profileLoading } = useGetProfileQuery(
+    {},
+    { skip: !token }
+  );
   const { data } = useGetExpertiesQuery();
 
   const experties = data?.user?.expertise;
@@ -40,6 +44,7 @@ const DashboardProfile = () => {
 
   return (
     <div className="mt-4">
+      {profileLoading && <Loader />}
       <div>
         <div>
           <div className="text-white relative h-60 border-2 bg-gradient-to-r from-[#2348d1] to-primary border-primary rounded-t-[1rem] overflow-hidden">
@@ -197,4 +202,4 @@ const DashboardProfile = () => {
   );
 };
 
-export default DashboardProfile;
+export default ProfileComponent;

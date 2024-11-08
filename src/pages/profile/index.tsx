@@ -1,12 +1,12 @@
-import NewProfile from "@components/common/NewProfile";
+import ProfileComponent from "@components/profile";
 import DashboardLayout from "@layout/DashboardLayout";
 
-const New = () => {
+const ProfilePage = () => {
 	return (
 		<DashboardLayout>
-			<NewProfile />
+			<ProfileComponent />
 		</DashboardLayout>
 	);
 };
 
-export default New;
+export default ProfilePage;
