@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
       return Response.redirect(new URL('/', request.url));
     }
   } else {
-    if (!['/login', '/signup', '/forgot-password'].includes(pathname)) {
+    if (!['/login', '/signup', '/forgot-password', '/reset-password'].includes(pathname)) {
       return Response.redirect(new URL('/login', request.url));
     }
   }
