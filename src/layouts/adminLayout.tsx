@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import {
@@ -16,10 +16,38 @@ const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }: any) => {
     const router = useRouter();
     const [collapsed, setCollapsed] = useState(false);
-    const [selectedKey, setSelectedKey] = useState("1");
+    const [selectedKey, setSelectedKey] = useState("");
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+
+    // Set active key based on current pathname
+    useEffect(() => {
+        switch (router.pathname) {
+            case "/dashboard":
+                setSelectedKey("1");
+                break;
+            case "/dashboard/projects":
+                setSelectedKey("2");
+                break;
+            case "/dashboard/members":
+                setSelectedKey("3");
+                break;
+            case "/dashboard/subscription":
+                setSelectedKey("4");
+                break;
+            case "/dashboard/settings":
+                setSelectedKey("5");
+                break;
+            case "/logout":
+                setSelectedKey("6");
+                break;
+            default:
+                setSelectedKey("");
+                break;
+        }
+    }, [router.pathname]);
+
     const handleMenuClick = (e: any) => {
         setSelectedKey(e.key);
         switch (e.key) {
@@ -52,7 +80,11 @@ const AdminLayout = ({ children }: any) => {
                 <Sider className={`h-[100vh] bg-white ${collapsed ? "" : "min-w-60 sticky top-0"} text-[#45464F]`} trigger={null} collapsible collapsed={collapsed}>
                     <div className="flex flex-col justify-center">
                         <div className="demo-logo-vertical flex justify-center items-center">
-                            {collapsed ? <Image src={logo_col} className="w-3/4 mx-2 my-4" alt={"logo"} />:<Image src={posinnove_logo} className="w-3/4 mx-2 my-4" alt={"logo"} />}
+                            {collapsed ? (
+                                <Image src={logo_col} className="w-3/4 mx-2 my-4" alt={"logo"} />
+                            ) : (
+                                <Image src={posinnove_logo} className="w-3/4 mx-2 my-4" alt={"logo"} />
+                            )}
                         </div>
                         <Menu
                             mode="inline"
@@ -126,7 +158,10 @@ const AdminLayout = ({ children }: any) => {
                         />
                         <div className="flex justify-between items-center w-[60%]">
                             <div className=" flex items-center border border-[#100c0c] rounded-full bg-white p-1">
-                                <Input placeholder="Search" size="large" className="rounded-full border-none outline-none focus:outline-none w-72" /><div className="p-1.5 bg-[#585E71] rounded-full text-white"><Search /></div>
+                                <Input placeholder="Search" size="large" className="rounded-full border-none outline-none focus:outline-none w-72" />
+                                <div className="p-1.5 bg-[#585E71] rounded-full text-white">
+                                    <Search />
+                                </div>
                             </div>
                             <div className="flex items-center justify-between gap-12 text-[#585E71]">
                                 <MessageCircleMore size={30} />
