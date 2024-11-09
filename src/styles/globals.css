@@ -117,4 +117,5 @@ body {
 .ant-menu-item-selected:hover {
     background-color: #091e6a !important;
     color: #fff !important;
+	color: rgba(255, 193, 7, 0.532);
 }
