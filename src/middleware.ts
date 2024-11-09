@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (token) {
-    if (['/login', '/signup', '/forgot-password'].includes(pathname)) {
+    if (['/login', '/signup', '/forgot-password','/reset-password'].includes(pathname)) {
       return Response.redirect(new URL('/', request.url));
     }
     if (!pathname.startsWith('/') && pathname !== '/') {
