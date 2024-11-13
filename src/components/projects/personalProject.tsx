@@ -16,7 +16,7 @@ const PersonalProjects = () => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-3 w-full">
+          <div className="grid md:grid-cols-3 gap-3 w-full">
             {projects?.data?.projects?.map((project: any, index: number) => (
               <PersonalCard key={index} project={project} />
             ))}
