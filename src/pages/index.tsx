@@ -1,17 +1,15 @@
-import CurrentsProjects from "@components/projects/currentsProjects";
-import PersonalProjects from "@components/projects/personalProject";
-import Picked from "@components/projects/picked";
-import DashboardLayout from "@layout/DashboardLayout";
-// import DashboardLayout from '@layoutLayout';
+import MyChart from '@components/MyChart';
+import AdminLayout from '@layout/adminLayout';
+import React from 'react';
 
-const index = () => {
-	return (
-		<DashboardLayout>
-			<CurrentsProjects />
-			<PersonalProjects />
-			<Picked />
-		</DashboardLayout>
-	);
+const HomePage = () => {
+  return (
+    <AdminLayout>
+      <div>
+        <MyChart />
+      </div>
+    </AdminLayout>
+  );
 };
 
-export default index;
+export default HomePage;

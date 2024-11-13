@@ -14,6 +14,21 @@ const routes = {
     url: '/projects',
     name: 'projects',
   },
+  members: {
+    label: 'Members',
+    url: '/members',
+    name: 'members',
+  },
+  subscription: {
+    label: 'Subscriptions',
+    url: '/subscriptions',
+    name: 'subscriptions',
+  },
+  setting: {
+    label: 'Settings',
+    url: '/settings',
+    name: 'settings',
+  },
 };
 
 export default routes;
