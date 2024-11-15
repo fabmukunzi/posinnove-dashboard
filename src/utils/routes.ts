@@ -29,6 +29,11 @@ const routes = {
     url: '/settings',
     name: 'settings',
   },
+  login: {
+    label: 'Login',
+    url: '/login',
+    name: 'login',
+  },
 };
 
 export default routes;
