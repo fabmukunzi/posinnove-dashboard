@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { destroyCookie } from 'nookies';
 
 const initialState: { token?: string } = {
   token: undefined,
@@ -14,6 +15,7 @@ const appSlice = createSlice({
     },
     clearToken: (state) => {
       state.token = undefined;
+      destroyCookie(null, 'access_token', { path: '/' });
     },
   },
 });

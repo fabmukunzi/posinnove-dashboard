@@ -1,3 +1,4 @@
+import routes from '@utils/routes';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
@@ -5,15 +6,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (token) {
-    if (['/login', '/signup', '/forgot-password','/reset-password'].includes(pathname)) {
-      return Response.redirect(new URL('/', request.url));
-    }
-    if (!pathname.startsWith('/') && pathname !== '/') {
-      return Response.redirect(new URL('/', request.url));
+    if (['/login', '/signup', '/forgot-password', '/reset-password'].includes(pathname)) {
+      return NextResponse.redirect(new URL('/', request.url));
     }
   } else {
     if (!['/login', '/signup', '/forgot-password', '/reset-password'].includes(pathname)) {
-      return Response.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL(routes.login.url, request.url));
     }
   }
 
