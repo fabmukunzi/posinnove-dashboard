@@ -1,11 +1,11 @@
 import ProfileComponent from "@components/profile";
-import DashboardLayout from "@layout/DashboardLayout";
+import AdminLayout from "@layout/adminLayout";
 
 const ProfilePage = () => {
 	return (
-		<DashboardLayout>
+		<AdminLayout>
 			<ProfileComponent />
-		</DashboardLayout>
+		</AdminLayout>
 	);
 };
 

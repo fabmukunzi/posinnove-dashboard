@@ -15,19 +15,16 @@ import {
   BellDot,
   ChevronsLeft,
   ChevronsRight,
-  FolderOpenDot,
-  LayoutDashboard,
-  LogOut,
   MessageCircleMore,
-  Settings,
-  Siren,
-  Users,
 } from 'lucide-react';
 import Image from 'next/image';
 import { logo_col, posinnove_logo, profile, support } from '@utils/images';
-import routes from '@utils/routes';
 import { useGetProfileQuery } from '@store/actions/auth';
 import { navigationConfig } from '@utils/config/navigation.config';
+import { DiscordLogo } from '@phosphor-icons/react';
+import Link from 'next/link';
+import routes from '@utils/routes';
+import Loader from '@components/common/loader';
 
 const { Header, Sider, Content } = Layout;
 
@@ -41,14 +38,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const { data } = useGetProfileQuery({});
+  const { data, isLoading } = useGetProfileQuery({});
 
-  const menuItems: MenuProps['items'] = navigationConfig[data?.data?.role] || []
+  const menuItems: MenuProps['items'] =
+    navigationConfig[data?.data?.role] || [];
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     router.push(key);
   };
 
+  if (isLoading) return <Loader />;
   return (
     <AntdRegistry>
       <Layout className="h-full">
@@ -117,16 +116,24 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 className="w-80"
               />
               <div className="flex items-center justify-between gap-12 text-[#585E71]">
-                <MessageCircleMore size={30} />
-                <BellDot size={30} />
-                <Avatar
-                  className="p-0.5 bg-white"
-                  shape="square"
-                  size="large"
-                  icon={
-                    <Image src={profile} className="rounded-md" alt="avatar" />
-                  }
-                />
+                <DiscordLogo size={30} />
+                {/* <BellDot size={30} /> */}
+                <Link href={routes.profile.url}>
+                  <Avatar
+                    className="p-0.5 bg-white"
+                    shape="square"
+                    size="large"
+                    icon={
+                      <Image
+                        width={100}
+                        height={100}
+                        src={data?.data?.profileImage}
+                        className="rounded-md"
+                        alt="avatar"
+                      />
+                    }
+                  />
+                </Link>
               </div>
             </div>
           </Header>
