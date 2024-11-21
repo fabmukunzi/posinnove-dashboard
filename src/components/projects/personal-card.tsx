@@ -1,14 +1,16 @@
 import { icons } from '@utils/icons';
 import { Avatar, Button, Image, Typography } from 'antd';
 import React from 'react';
-import { simba } from '@utils/images';
 import { User } from 'lucide-react';
 import Link from 'next/link';
 import routes from '@utils/routes';
 
 function PersonalCard({ project }: { project: any }) {
   return (
-    <div className="border border-borderColor h-56 rounded-md  bg-surface flex">
+    <Link
+      href={routes.projects.url + '/' + project?.id}
+      className="border border-borderColor h-56 rounded-md  bg-surface flex"
+    >
       <div
         className="w-[50%] bg-blue-100 rounded-l-md p-2"
         style={{
@@ -34,21 +36,21 @@ function PersonalCard({ project }: { project: any }) {
         </div>
       </div>
       <div className="w-[50%] p-4 flex flex-col justify-between gap-2">
-        <h3 className="text-lg font-bold leading-4">{project.title}</h3>
-        <Typography.Paragraph ellipsis={{ rows: 4 }} className="text-xs">
+        <h3 className="text-lg font-semibold leading-4">{project.title}</h3>
+        <Typography.Paragraph ellipsis={{ rows: 7 }} className="text-xs">
           {project.projectContent}
         </Typography.Paragraph>
-        <div className="flex gap-4">
+        {/* <div className="flex gap-4">
           {project?.technologies?.map((tech: any, index: any) => (
             <div className="flex items-center gap-1" key={tech.key}>
               <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
               <span className="text-xs">{tech}</span>
             </div>
           ))}
-        </div>
-		<Link href={routes.projects.url+"/"+project?.id}>
+        </div> */}
+        {/* <Link href={routes.projects.url+"/"+project?.id}>
 		<Button className="rounded-xl h-8">See details</Button>
-		</Link>
+		</Link> */}
         <div className="flex flex-wrap items-center gap-2">
           {project?.projectAuthor?.profileImage ? (
             <Image
@@ -67,7 +69,7 @@ function PersonalCard({ project }: { project: any }) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

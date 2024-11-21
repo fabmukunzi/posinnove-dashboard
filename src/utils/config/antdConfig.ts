@@ -41,7 +41,7 @@ const antdTheme: ThemeConfig = {
     Tabs:{
       titleFontSize:16,
       horizontalMargin:"0 0 18px 0"
-    }
+    },
   },
 };
 

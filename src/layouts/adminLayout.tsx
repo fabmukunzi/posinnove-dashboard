@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import {
   Avatar,
   Button,
@@ -19,7 +19,6 @@ import {
   LayoutDashboard,
   LogOut,
   MessageCircleMore,
-  Search,
   Settings,
   Siren,
   Users,
@@ -27,6 +26,8 @@ import {
 import Image from 'next/image';
 import { logo_col, posinnove_logo, profile, support } from '@utils/images';
 import routes from '@utils/routes';
+import { useGetProfileQuery } from '@store/actions/auth';
+import { navigationConfig } from '@utils/config/navigation.config';
 
 const { Header, Sider, Content } = Layout;
 
@@ -40,15 +41,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const { data } = useGetProfileQuery({});
 
-  const menuItems: MenuProps['items'] = [
-    { key: routes.home.url, icon: <LayoutDashboard />, label: 'Dashboard' },
-    { key: routes.projects.url, icon: <FolderOpenDot />, label: 'Projects' },
-    { key: routes.members.url, icon: <Users />, label: 'Members' },
-    { key: routes.subscription.url, icon: <Siren />, label: 'Subscription' },
-    { key: routes.setting.url, icon: <Settings />, label: 'Settings' },
-    { key: '/logout', icon: <LogOut />, label: 'Logout' },
-  ];
+  const menuItems: MenuProps['items'] = navigationConfig[data?.data?.role] || []
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     router.push(key);
