@@ -34,30 +34,18 @@ const SingleProject = () => {
       ) : (
         <>
           <AdminLayout>
-            <div className="flex md:flex-row flex-col gap-10">
-              <Card
-                bordered
-                size="small"
-                className="md:w-[50%] rounded-md object-cover border border-primary h-[500px] overflow-hidden p-0"
-                cover={
-                  <Image
-                    className="w-full h-full"
-                    src={data?.data?.coverImage}
-                    alt={data?.data?.title}
-                  />
-                }
-              />
-              <div className="overflow-y-scroll overflow-x-hidden h-[500px] md:w-[50%]">
-                <Typography.Title className="font-semibold" level={3}>
-                  Project : {data?.data?.title}
-                </Typography.Title>
-                <div className="flex justify-between my-4">
-                  <div className="flex flex-wrap items-center gap-2">
+            <div className="mx-auto w-[90%]">
+              <div className="flex justify-between mb-5">
+                <div>
+                  <Typography.Title className="font-semibold my-0" level={3}>
+                    Project : {data?.data?.title}
+                  </Typography.Title>
+                  <div className="flex flex-wrap items-center gap-2 my-2">
                     {data?.data?.projectAuthor?.profileImage ? (
                       <Image
                         preview={false}
-                        width={35}
-                        height={35}
+                        width={30}
+                        height={30}
                         className="border border-primary rounded-full"
                         src={data?.data?.projectAuthor?.profileImage}
                         alt="diamond"
@@ -67,32 +55,51 @@ const SingleProject = () => {
                         {data?.data?.projectAuthor?.lastName}
                       </Avatar>
                     )}
-                    <span className="font-semibold">
-                      {data?.data?.projectAuthor?.lastName}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1 mx-4">
-                      <Flag size={15} color="red" />
-                      <p className="text-xs font-semibold">
-                        ({dayjs(data?.data?.startDate).format('YYYY MMM D')} -{' '}
-                        {dayjs(data?.data?.deadline).format('YYYY MMM D')})
-                      </p>
-                    </div>
-                    <div className="flex mx-4 items-center gap-2 mt-2">
-                      <Share className='cursor-pointer' onClick={copyToClipboard} size={18} />
-                      <Button icon={<ExternalLink size={15}/>} size="small">
-                        Submit Now
-                      </Button>
+                    <div className="flex flex-col">
+                      <span className="font-semibold  leading-none	">
+                        {data?.data?.projectAuthor?.lastName}
+                      </span>
+                      <span className="font-semibold text-xs text-[#737373] leading-4">
+                        @{data?.data?.projectAuthor?.lastName}
+                      </span>
                     </div>
                   </div>
                 </div>
+
+                <div>
+                  <div className="flex items-center gap-1 mx-4">
+                    <Flag size={15} color="red" />
+                    <p className="text-xs font-semibold">
+                      ({dayjs(data?.data?.startDate).format('YYYY MMM D')} -{' '}
+                      {dayjs(data?.data?.deadline).format('YYYY MMM D')})
+                    </p>
+                  </div>
+                  <div className="flex mx-4 items-center gap-2 mt-2">
+                    {/* <Share
+                      className="cursor-pointer"
+                      onClick={copyToClipboard}
+                      size={20}
+                    /> */}
+                    <Button icon={<ExternalLink size={15} />} block>
+                      Submit Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="">
+                <Image
+                  className="w-[1100px] object-cover h-[30rem] my-6"
+                  src={data?.data?.coverImage}
+                  alt={data?.data?.title}
+                />
+              </div>
+              <div className="overflow-x-hidden">
                 <Typography.Paragraph>
                   {data?.data?.projectContent}
                 </Typography.Paragraph>
               </div>
             </div>
-            <div className="mt-5">
+            <div className="mt-5 mx-auto w-[90%]">
               {/* <div>
           {data?.data?.projectAuthor?.profileImage ? (
             <Image

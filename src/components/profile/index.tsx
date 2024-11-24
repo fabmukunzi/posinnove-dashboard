@@ -108,21 +108,15 @@ const ProfileComponent = () => {
         <div className="flex mt-20 w-full gap-4">
           <div className="p-4 w-[50%] border border-primary rounded-xl">
             <h1 className="text-primary font-bold text-xl">About Me</h1>
-            {profile?.data?.About && profile?.data?.About?.length > 0 ? (
+            {profile?.data?.about && profile?.data?.about?.length > 0 ? (
               <div className="mt-4 h-[220px] overflow-y-auto">
                 <Typography.Paragraph>
-                  {profile?.data?.About}
+                  {profile?.data?.about}
                 </Typography.Paragraph>
               </div>
             ) : (
-              <div className="text-lg flex items-center gap-2">
+              <div className="text-lg flex items-center h-[80%] gap-2 text-black/50">
                 Please add bio
-                <button
-                  className="text-white rounded-lg text-base px-8 py-1 bg-primary"
-                  onClick={toggleEditModal}
-                >
-                  Add
-                </button>
               </div>
             )}
           </div>
@@ -141,13 +135,13 @@ const ProfileComponent = () => {
                     </Tag>
                   ))
                 ) : (
-                  <div className="w-full h-full items-center justify-center text-xl mt-4 text-black/50">
+                  <div className="text-xl mt-4 text-black/50">
                     You have not added interest yet
                   </div>
                 )}
                 <Tag
                   icon={<PlusOutlined />}
-                  className="border-primary text-primary border-dashed"
+                  className="border-primary text-primary border-dashed max-h-fit"
                   // onClick={showInput}
                 >
                   Interest
