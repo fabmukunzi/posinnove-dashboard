@@ -1,14 +1,16 @@
 import { Button } from 'antd';
-import PersonalCard from './personal-card';
 import { useGetProjectsQuery } from '@store/actions/projects';
 import HashLoader from 'react-spinners/HashLoader';
 import NewProject from './new-project';
 import useDisclose from '@utils/hooks/useDisclose';
 import { Plus } from 'lucide-react';
+import ProjectCard from './project-card';
+import { useSelector } from 'react-redux';
 
 const PersonalProjects = () => {
   const { data: projects, isLoading } = useGetProjectsQuery();
   const { isOpen, toggle, close } = useDisclose();
+  const user = useSelector((state: any) => state.appReducer.userProfile);
   return (
     <div className="w-full">
       {isLoading ? (
@@ -17,14 +19,18 @@ const PersonalProjects = () => {
         </div>
       ) : (
         <div className="w-full">
-          <div className="flex justify-end my-4">
-            <Button icon={<Plus size={20} />} onClick={toggle}>Create Project</Button>
-          </div>
+          {user?.role !== 'learner' && (
+            <div className="flex justify-end my-4">
+              <Button icon={<Plus size={20} />} onClick={toggle}>
+                Create Project
+              </Button>
+            </div>
+          )}
 
           <NewProject open={isOpen} close={close} />
           <div className="grid md:grid-cols-3 gap-3 w-full my-8">
             {projects?.data?.projects?.map((project: any, index: number) => (
-              <PersonalCard key={index} project={project} />
+              <ProjectCard key={index} project={project} />
             ))}
           </div>
           {/* <h1 className="text-3xl font-semibold py-5 px-10">

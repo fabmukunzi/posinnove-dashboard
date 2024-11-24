@@ -34,6 +34,7 @@ type ModalProps = {
 };
 
 enum ProjectAttendes {
+  INDIVIDUAL=1,
   TEN = 10,
   TWENTY = 20,
   THIRTY = 30,
@@ -64,7 +65,7 @@ const NewProject: FC<ModalProps> = ({ open, close }) => {
     .filter(([key]) => isNaN(Number(key)))
     .map(([key, value]) => ({
       value,
-      label: key,
+      label: value,
     }));
 
   const handleNext = async (values: any) => {
