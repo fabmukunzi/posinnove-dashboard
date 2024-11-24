@@ -11,20 +11,18 @@ import {
   MenuProps,
   theme,
 } from 'antd';
-import {
-  BellDot,
-  ChevronsLeft,
-  ChevronsRight,
-  MessageCircleMore,
-} from 'lucide-react';
+import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import Image from 'next/image';
-import { logo_col, posinnove_logo, profile, support } from '@utils/images';
+import { logo_col, posinnove_logo, support } from '@utils/images';
 import { useGetProfileQuery } from '@store/actions/auth';
 import { navigationConfig } from '@utils/config/navigation.config';
 import { DiscordLogo } from '@phosphor-icons/react';
 import Link from 'next/link';
 import routes from '@utils/routes';
 import Loader from '@components/common/loader';
+import { setUserProfile } from '@store/reducers/app';
+import { useDispatch } from 'react-redux';
+import { defaultProfileImage } from '@utils/profileDataUtils';
 
 const { Header, Sider, Content } = Layout;
 
@@ -34,14 +32,15 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const { data, isLoading } = useGetProfileQuery({});
-
+  dispatch(setUserProfile(data?.data));
   const menuItems: MenuProps['items'] =
-    navigationConfig[data?.data?.role] || [];
+    navigationConfig[data?.data?.role || 'learner'] || [];
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     router.push(key);
@@ -109,14 +108,19 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               onClick={() => setCollapsed(!collapsed)}
               style={{ width: 34, height: 34 }}
             />
-            <div className="flex justify-between items-center w-[60%]">
-              <Input.Search
+            <div className="flex justify-end mr-2 items-center">
+              {/* <Input.Search
                 placeholder="Search"
                 size="large"
                 className="w-80"
-              />
-              <div className="flex items-center justify-between gap-12 text-[#585E71]">
-                <DiscordLogo size={30} />
+              /> */}
+              <div className="flex items-center justify-between gap-20 text-[#585E71]">
+                <DiscordLogo
+                  className="cursor-pointer"
+                  size={30}
+                  color="#091e6a"
+                  weight="fill"
+                />
                 {/* <BellDot size={30} /> */}
                 <Link href={routes.profile.url}>
                   <Avatar
@@ -127,9 +131,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       <Image
                         width={100}
                         height={100}
-                        src={data?.data?.profileImage}
-                        className="rounded-md"
-                        alt="avatar"
+                        alt="Profile Image"
+                        src={data.data.profileImage || defaultProfileImage}
                       />
                     }
                   />
