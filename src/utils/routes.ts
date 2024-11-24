@@ -1,3 +1,10 @@
+import Cookies from "js-cookie";
+import { Router } from "next/router";
+
+  const logout = () => {
+    Cookies.remove('access_token');
+  };
+
 const routes = {
   home: {
     label: 'Home',
@@ -33,6 +40,7 @@ const routes = {
     label: 'Login',
     url: '/login',
     name: 'login',
+    onClick: logout,
   },
 };
 
