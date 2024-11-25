@@ -49,28 +49,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   if (isLoading) return <Loader />;
-  const logout = () => {
-    Cookies.remove('access_token');
-    router.push(routes.home.url);
-  };
-
-  const items: MenuProps['items'] = [
-    {
-      label: <Link href={routes.profile.url}>View Profile</Link>,
-      key: '1',
-      icon: <Users />,
-    },
-    {
-      label: 'Logout',
-      key: '3',
-      icon: <LogOut />,
-      danger: true,
-      onClick: logout,
-    },
-  ];
-  const menuProps = {
-    items,
-  };
   return (
     <AntdRegistry>
       <Layout className="h-full">
@@ -147,8 +125,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 />
                 {/* <BellDot size={30} /> */}
                 
-                <Dropdown menu={menuProps}>
-                {/* <Link href={routes.profile.url}> */}
+                <Link href={routes.profile.url}>
                   <Avatar
                     className="p-0.5 bg-white"
                     shape="square"
@@ -162,8 +139,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       />
                     }
                   />
-                {/* </Link> */}
-                </Dropdown>
+                </Link>
               </div>
             </div>
           </Header>

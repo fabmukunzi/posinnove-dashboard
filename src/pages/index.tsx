@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 
 const HomePage = () => {
   const userProfile = useSelector((state: RootState) => state.appReducer.userProfile);
-  console.log(userProfile?.role);
-  
   return (
     <AdminLayout>
       <div>
