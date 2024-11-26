@@ -5,13 +5,14 @@ import {
   Avatar,
   Button,
   Divider,
+  Dropdown,
   Input,
   Layout,
   Menu,
   MenuProps,
   theme,
 } from 'antd';
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight, LogOut, Settings, Users } from 'lucide-react';
 import Image from 'next/image';
 import { logo_col, posinnove_logo, support } from '@utils/images';
 import { useGetProfileQuery } from '@store/actions/auth';
@@ -23,6 +24,7 @@ import Loader from '@components/common/loader';
 import { setUserProfile } from '@store/reducers/app';
 import { useDispatch } from 'react-redux';
 import { defaultProfileImage } from '@utils/profileDataUtils';
+import Cookies from 'js-cookie';
 
 const { Header, Sider, Content } = Layout;
 
@@ -122,6 +124,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                   weight="fill"
                 />
                 {/* <BellDot size={30} /> */}
+                
                 <Link href={routes.profile.url}>
                   <Avatar
                     className="p-0.5 bg-white"
