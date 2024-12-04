@@ -1,4 +1,4 @@
-import { useAddInterestMutation } from "@store/actions/interest";
+import { useAddUserInterestMutation } from "@store/actions/interest";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -25,7 +25,7 @@ const InterestModal = ({ toggleModal }: InterestModalProps) => {
 	const [nextId, setNextId] = useState(1);
 	const [error, setError] = useState<string | null>(null);
 
-	const [addInterest, { isLoading }] = useAddInterestMutation();
+	const [addInterest, { isLoading }] = useAddUserInterestMutation();
 	const { register, handleSubmit, reset } = useForm<{ interest: string }>();
 
 	const handleAddItem = (interest: string) => {

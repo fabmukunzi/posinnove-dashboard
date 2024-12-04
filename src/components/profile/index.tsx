@@ -4,13 +4,13 @@ import { useGetProfileQuery } from '@store/actions/auth';
 import { RootState } from '@store/index';
 import { useSelector } from 'react-redux';
 import { defaultProfileImage } from '@utils/profileDataUtils';
-import { useGetInterestQuery } from '@store/actions/interest';
+import { useGetUserInterestsQuery } from '@store/actions/interest';
 import { useGetExpertiesQuery } from '@store/actions/experties';
-import { Button, Image, notification, Tag, Typography } from 'antd';
-import { Copy, Mail, Pen, Phone, Plus } from 'lucide-react';
+import { Button, Image, notification, Typography } from 'antd';
+import { Copy, Mail, Pen, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { PlusOutlined } from '@ant-design/icons';
 import Loader from '@components/common/loader';
+import { TagGroup, Tag } from 'rsuite';
 
 const ProfileComponent = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -18,18 +18,20 @@ const ProfileComponent = () => {
     setOpenEditModal(!openEditModal);
   };
 
-  const { data: interestData, isLoading } = useGetInterestQuery();
-  const fileteredInterest = interestData?.user.interests;
-
   const { token } = useSelector((state: RootState) => state.appReducer);
 
   const { data: profile, isLoading: profileLoading } = useGetProfileQuery(
     {},
     { skip: !token }
   );
+
+  const { data: interests, isLoading } = useGetUserInterestsQuery(
+    profile?.data?.id
+  );
+
   const { data } = useGetExpertiesQuery();
 
-  const experties = data?.user?.expertise;
+  const expertises = data?.user?.expertise;
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -41,7 +43,6 @@ const ProfileComponent = () => {
         notification.error({ message: 'Profile link cannot be copied' });
       });
   };
-
   return (
     <div className="mt-4">
       {profileLoading && <Loader />}
@@ -100,7 +101,7 @@ const ProfileComponent = () => {
                 height={120}
                 preview={false}
                 loading="lazy"
-                className={`!w-[120px] !h-[120px] object-cover rounded-full border-4 border-primary`}
+                className={`!w-[120px] !h-[120px] bg-white object-cover rounded-full border-4 border-primary`}
               />
             </div>
           </div>
@@ -123,60 +124,32 @@ const ProfileComponent = () => {
           <div className="w-full">
             <div className="w-full p-2 px-3 border border-primary rounded-lg flex flex-col gap-4 h-[48%]">
               <h1 className="text-primary font-semibold text-xl">Interests</h1>
-              <div
-                className={`${
-                  isLoading ? 'grid grid-cols-4' : 'flex flex-row flex-wrap'
-                }  gap-1`}
-              >
-                {fileteredInterest?.length > 0 ? (
-                  fileteredInterest?.map((interest: string, index: number) => (
-                    <Tag color="#182c78" key={index}>
-                      {interest}
+              <TagGroup>
+                {interests?.data?.length > 0 ? (
+                  interests.data.map((interest: any, index: number) => (
+                    <Tag className="bg-[#091F92] text-white" key={index}>
+                      {interest?.name}
                     </Tag>
                   ))
                 ) : (
-                  <div className="text-xl mt-4 text-black/50">
-                    You have not added interest yet
-                  </div>
+                  <p className="text-lg text-center text-black/50">No interests yet</p>
                 )}
-                <Tag
-                  icon={<PlusOutlined />}
-                  className="border-primary text-primary border-dashed max-h-fit"
-                  // onClick={showInput}
-                >
-                  Interest
-                </Tag>
-              </div>
+              </TagGroup>
             </div>
+
             <div className="w-full p-2 px-3 mt-2 border rounded-lg border-primary flex flex-col gap-4 h-[48%]">
-              <h1 className="text-primary font-semibold text-xl">Experties</h1>
-              <div
-                className={`${
-                  isLoading ? 'grid grid-cols-4' : 'flex flex-row flex-wrap'
-                }  gap-1`}
-              >
-                {isLoading ? (
-                  [0, 1, 2, 3].map((skel) => (
-                    <div
-                      key={skel}
-                      className="rounded-r-full rounded-l-full border w-full h-8 animate-pulse bg-black/20"
-                    ></div>
-                  ))
-                ) : experties?.length > 0 ? (
-                  experties?.map((expert: string, idx: number) => (
-                    <div
-                      className="px-4 py-1 rounded-full border flex items-center justify-center"
-                      key={idx}
-                    >
-                      {expert}
-                    </div>
+              <h1 className="text-primary font-semibold text-xl">Expertises</h1>
+              <TagGroup>
+                {expertises?.data?.length > 0 ? (
+                  expertises.data.map((expertise: any, index: number) => (
+                    <Tag className="bg-[#091F92] text-white" key={index}>
+                      {expertise?.name}
+                    </Tag>
                   ))
                 ) : (
-                  <div className="w-full h-full items-center justify-center text-xl mt-4 text-black/50">
-                    You have not added experties yet
-                  </div>
+                  <p className="text-lg text-center text-black/50">No expertises yet</p>
                 )}
-              </div>
+              </TagGroup>
             </div>
           </div>
         </div>
@@ -191,7 +164,12 @@ const ProfileComponent = () => {
           </div>
         </div>
       </div>
-      <EditProfileModal visible={openEditModal} toggleModal={toggleEditModal} />
+      <EditProfileModal
+        profileData={profile}
+        interests={interests?.data}
+        visible={openEditModal}
+        toggleModal={toggleEditModal}
+      />
     </div>
   );
 };

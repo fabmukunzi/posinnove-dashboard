@@ -13,21 +13,51 @@ import {
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import countryList from 'react-select-country-list';
 import { defaultProfileImage } from '@utils/profileDataUtils';
+import { useUpdateProfileMutation } from '@store/actions/auth';
 import {
-  useUpdateProfileMutation,
-  useGetProfileQuery,
-} from '@store/actions/auth';
+  useGetInterestsQuery,
+  useAddUserInterestMutation,
+} from '@store/actions/interest';
 
 interface EditProfileModalProps {
   visible: boolean;
   toggleModal: () => void;
+  profileData: any;
+  interests: any;
 }
 
-const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
-  const { data: profileData, isLoading: isProfileLoading } = useGetProfileQuery(
-    {}
-  );
+const EditProfileModal = ({
+  visible,
+  toggleModal,
+  profileData,
+  interests,
+}: EditProfileModalProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const { data, isLoading: loadingInterests } = useGetInterestsQuery();
+  const [addUserInterest, { isLoading: addInterestLoading }] =
+    useAddUserInterestMutation();
+
+  const interestsOptions = data?.data?.map((item: any) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+  const userInterests = interests?.map((item: any) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+
+  const safeInterestsOptions = Array.isArray(interestsOptions)
+    ? interestsOptions
+    : [];
+  const safeUserInterests = Array.isArray(userInterests) ? userInterests : [];
+
+  const combinedOptions = [
+    ...safeInterestsOptions,
+    ...safeUserInterests.filter(
+      (userInterest) =>
+        !safeInterestsOptions.some((option) => option.id === userInterest.id)
+    ),
+  ];
 
   const [form] = Form.useForm();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -48,8 +78,16 @@ const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
 
   const onFinish = async (values: any) => {
     try {
+      await addUserInterest({
+        body: values?.interests,
+        userId: profileData?.data?.id,
+      }).unwrap();
       const formData = new FormData();
-      Object.keys(values).forEach((key) => formData.append(key, values[key]));
+      Object.keys(values).forEach((key) => {
+        if (key !== 'interests' && key !== 'expertises') {
+          formData.append(key, values[key]);
+        }
+      });
       if (selectedImage) {
         formData.append('profileImage', selectedImage);
       }
@@ -62,8 +100,8 @@ const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
       toggleModal();
     } catch (error: any) {
       notification.error({
-        message: 'Profile update failed',
-        description: error.message,
+        message:
+          error?.data?.error || error?.data?.message || 'Profile update failed',
       });
     }
   };
@@ -73,7 +111,7 @@ const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
       open={visible}
       onCancel={toggleModal}
       footer={null}
-      className="w-[60%]"
+      className="w-[60%] bg-black"
       title={
         <Typography.Title level={4} className="font-semibold">
           Edit Profile
@@ -173,7 +211,32 @@ const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
               />
             </Form.Item>
           </div>
+          <div className="flex w-full gap-4">
+            <Form.Item
+              name="interests"
+              label="Interests"
+              className="w-full"
+              initialValue={userInterests}
+            >
+              <Select
+                placeholder="Select your Interests"
+                size="large"
+                options={combinedOptions}
+                mode="tags"
+                disabled={loadingInterests}
+              />
+            </Form.Item>
 
+            <Form.Item name="expertises" label="Expertises" className="w-full">
+              <Select
+                placeholder="Select your Expertises"
+                size="large"
+                options={interestsOptions}
+                mode="tags"
+                disabled={loadingInterests}
+              />
+            </Form.Item>
+          </div>
           <div className="flex w-full gap-4">
             <Form.Item name="About" label="Bio" className="w-full">
               <Input.TextArea placeholder="Add bio" rows={4} />
@@ -183,12 +246,8 @@ const EditProfileModal = ({ visible, toggleModal }: EditProfileModalProps) => {
           <Form.Item>
             <div className="flex justify-end gap-4">
               <Button onClick={toggleModal}>Cancel</Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={isLoading || isProfileLoading}
-              >
-                {isLoading || isProfileLoading ? 'Updating...' : 'Update'}
+              <Button type="primary" htmlType="submit">
+                {addInterestLoading || isLoading ? 'Updating...' : 'Update'}
               </Button>
             </div>
           </Form.Item>

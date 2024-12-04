@@ -135,7 +135,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                         width={100}
                         height={100}
                         alt="Profile Image"
-                        src={data.data.profileImage || defaultProfileImage}
+                        src={data?.data?.profileImage || defaultProfileImage}
                       />
                     }
                   />
