@@ -14,21 +14,21 @@ export const navigationConfig: Record<
   { key: string; label: string; icon: JSX.Element,onClick?: () => void }[]
 > = {
   learner: [
-    { key: routes.home.url, icon: <LayoutDashboard />, label: 'Dashboard' },
-    { key: routes.projects.url, icon: <FolderOpenDot />, label: 'Projects' },
-    { key: '/login', icon: <LogOut />, label: 'Logout', onClick: () => Cookies.remove('access_token') },
+    { key: routes.home.url, icon: <LayoutDashboard className="mt-2 "/>, label: 'Dashboard' },
+    { key: routes.projects.url, icon: <FolderOpenDot className="mt-2 "/>, label: 'Projects' },
+    { key: '/login', icon: <LogOut className="mt-2 "/>, label: 'Logout', onClick: () => Cookies.remove('access_token') },
   ],
   instructor: [
-    { key: routes.home.url, icon: <LayoutDashboard />, label: 'Dashboard' },
-    { key: routes.projects.url, icon: <FolderOpenDot />, label: 'Projects' },
-    { key: '/logout', icon: <LogOut />, label: 'Logout', onClick: () => Cookies.remove('access_token') },
+    { key: routes.home.url, icon: <LayoutDashboard className="mt-2 "/>, label: 'Dashboard' },
+    { key: routes.projects.url, icon: <FolderOpenDot className="mt-2 "/>, label: 'Projects' },
+    { key: '/logout', icon: <LogOut className="mt-2 "/>, label: 'Logout', onClick: () => Cookies.remove('access_token') },
   ],
   admin: [
-    { key: routes.home.url, icon: <LayoutDashboard />, label: 'Dashboard' },
-    { key: routes.projects.url, icon: <FolderOpenDot />, label: 'Projects' },
-    { key: routes.members.url, icon: <Users />, label: 'Members' },
-    { key: routes.subscription.url, icon: <Siren />, label: 'Subscription' },
-    { key: routes.setting.url, icon: <Settings />, label: 'Settings' },
-    { key: '/logout', icon: <LogOut />, label: 'Logout', onClick: () => Cookies.remove('access_token') },
+    { key: routes.home.url, icon: <LayoutDashboard className="mt-2 "/>, label: 'Dashboard' },
+    { key: routes.projects.url, icon: <FolderOpenDot className="mt-2 "/>, label: 'Projects' },
+    { key: routes.members.url, icon: <Users className="mt-2 "/>, label: 'Members' },
+    { key: routes.subscription.url, icon: <Siren className="mt-2 "/>, label: 'Subscription' },
+    { key: routes.setting.url, icon: <Settings className="mt-2 "/>, label: 'Settings' },
+    { key: '/logout', icon: <LogOut className="mt-2 "/>, label: 'Logout',  onClick: () => Cookies.remove('access_token') },
   ],
 };

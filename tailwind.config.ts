@@ -17,6 +17,16 @@ const config: Config = {
         customBlack: '#000000',
         grayy: "#000000"
       },
+      screens: {
+        xm:'360px',
+        sm: '375px',
+        xmd: '600px',
+        md: '768px',
+        lg: '976px',
+        xlg: '1040px',
+        mdl: '1240px',
+        xl: '1440px',
+      },
     },
   },
   plugins: [],
