@@ -5,7 +5,7 @@ import { RootState } from '@store/index';
 import { useSelector } from 'react-redux';
 import { defaultProfileImage } from '@utils/profileDataUtils';
 import { useGetUserInterestsQuery } from '@store/actions/interest';
-import { useGetExpertiesQuery } from '@store/actions/experties';
+import { useGetUserExpertisesQuery } from '@store/actions/expertises';
 import { Button, Image, notification, Typography } from 'antd';
 import { Copy, Mail, Pen, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -29,9 +29,9 @@ const ProfileComponent = () => {
     profile?.data?.id
   );
 
-  const { data } = useGetExpertiesQuery();
+  const { data } = useGetUserExpertisesQuery(profile?.data?.id);
 
-  const expertises = data?.user?.expertise;
+  const expertises = data?.data;
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -132,7 +132,9 @@ const ProfileComponent = () => {
                     </Tag>
                   ))
                 ) : (
-                  <p className="text-lg text-center text-black/50">No interests yet</p>
+                  <p className="text-lg text-center text-black/50">
+                    No interests yet
+                  </p>
                 )}
               </TagGroup>
             </div>
@@ -140,14 +142,16 @@ const ProfileComponent = () => {
             <div className="w-full p-2 px-3 mt-2 border rounded-lg border-primary flex flex-col gap-4 h-[48%]">
               <h1 className="text-primary font-semibold text-xl">Expertises</h1>
               <TagGroup>
-                {expertises?.data?.length > 0 ? (
-                  expertises.data.map((expertise: any, index: number) => (
+                {expertises?.length > 0 ? (
+                  expertises?.map((expertise: any, index: number) => (
                     <Tag className="bg-[#091F92] text-white" key={index}>
                       {expertise?.name}
                     </Tag>
                   ))
                 ) : (
-                  <p className="text-lg text-center text-black/50">No expertises yet</p>
+                  <p className="text-lg text-center text-black/50">
+                    No expertises yet
+                  </p>
                 )}
               </TagGroup>
             </div>
@@ -169,6 +173,7 @@ const ProfileComponent = () => {
         interests={interests?.data}
         visible={openEditModal}
         toggleModal={toggleEditModal}
+        expertises={expertises?.data}
       />
     </div>
   );
