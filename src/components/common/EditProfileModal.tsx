@@ -18,12 +18,14 @@ import {
   useGetInterestsQuery,
   useAddUserInterestMutation,
 } from '@store/actions/interest';
+import { useAddUserExpertiseMutation, useGetExpertisesQuery } from '@store/actions/expertises';
 
 interface EditProfileModalProps {
   visible: boolean;
   toggleModal: () => void;
   profileData: any;
   interests: any;
+  expertises:any;
 }
 
 const EditProfileModal = ({
@@ -31,11 +33,15 @@ const EditProfileModal = ({
   toggleModal,
   profileData,
   interests,
+  expertises
 }: EditProfileModalProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const { data, isLoading: loadingInterests } = useGetInterestsQuery();
+  const { data:expertisesData, isLoading: loadingExpertises } = useGetExpertisesQuery();
   const [addUserInterest, { isLoading: addInterestLoading }] =
     useAddUserInterestMutation();
+    const [addUserExpertise, { isLoading: addExpertiseLoading }] =
+    useAddUserExpertiseMutation();
 
   const interestsOptions = data?.data?.map((item: any) => ({
     label: item?.name,
@@ -56,6 +62,28 @@ const EditProfileModal = ({
     ...safeUserInterests.filter(
       (userInterest) =>
         !safeInterestsOptions.some((option) => option.id === userInterest.id)
+    ),
+  ];
+
+  const expertiseOptions = expertisesData?.data?.map((item: any) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+  const userExpertises = expertises?.map((item: any) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+
+  const safeExpertisesOptions = Array.isArray(expertiseOptions)
+    ? expertiseOptions
+    : [];
+  const safeUserExpertises = Array.isArray(userExpertises) ? userExpertises : [];
+
+  const combinedExpertiseOptions = [
+    ...safeExpertisesOptions,
+    ...safeUserExpertises.filter(
+      (userInterest) =>
+        !safeExpertisesOptions.some((option) => option.id === userInterest.id)
     ),
   ];
 
@@ -80,6 +108,10 @@ const EditProfileModal = ({
     try {
       await addUserInterest({
         body: values?.interests,
+        userId: profileData?.data?.id,
+      }).unwrap();
+      await addUserExpertise({
+        body: values?.expertises,
         userId: profileData?.data?.id,
       }).unwrap();
       const formData = new FormData();
@@ -233,7 +265,7 @@ const EditProfileModal = ({
                 size="large"
                 options={interestsOptions}
                 mode="tags"
-                disabled={loadingInterests}
+                disabled={loadingExpertises}
               />
             </Form.Item>
           </div>
